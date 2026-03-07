@@ -81,9 +81,9 @@
     .btn-primary{padding:0.9rem 1.8rem;border-radius:var(--radius-pill);background:var(--color-primary);color:#fff;font-size:0.95rem;font-weight:500;box-shadow:var(--shadow-soft);transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
     .btn-primary:hover{transform:translateY(-1px);background:var(--color-primary-dark);box-shadow:0 16px 40px rgba(0,0,0,0.14)}
     .btn-secondary{padding:0.9rem 1.6rem;border-radius:var(--radius-pill);background:#fff;border:1px solid rgba(0,0,0,0.08);font-size:0.95rem;font-weight:500;display:inline-flex;align-items:center;gap:0.4rem}
-   .btn-cc{padding:0.9rem 1.6rem;border-radius:var(--radius-pill);background:#F1CB46;color:#2b1c10;font-size:0.95rem;font-weight:700;display:inline-flex;align-items:center;gap:0.4rem;box-shadow:0 16px 40px rgba(241,203,70,0.35);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease;animation:ccPulse 1.2s ease-in-out infinite}
-.btn-cc:hover{filter:brightness(0.95);box-shadow:0 18px 46px rgba(241,203,70,0.45)}
-@keyframes ccPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+    .btn-cc{padding:0.9rem 1.6rem;border-radius:var(--radius-pill);background:#F1CB46;color:#2b1c10;font-size:0.95rem;font-weight:700;display:inline-flex;align-items:center;gap:0.4rem;box-shadow:0 16px 40px rgba(241,203,70,0.35);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease;animation:ccPulse 1.2s ease-in-out infinite}
+    .btn-cc:hover{filter:brightness(0.95);box-shadow:0 18px 46px rgba(241,203,70,0.45)}
+    @keyframes ccPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
     .hero-note{font-size:0.85rem;color:var(--color-muted)}
 
     .hero-media{position:relative;min-height:320px;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);background:linear-gradient(135deg,rgba(200,138,91,0.06),rgba(245,233,218,0.9))}
@@ -95,13 +95,27 @@
     .hero-arrow--prev{left:1rem}
     .hero-arrow--next{right:1rem}
     .hero-logo-secondaire{position:absolute;right:1.2rem;bottom:1.1rem;height:52px;width:auto;opacity:.92;filter:drop-shadow(0 10px 22px rgba(0,0,0,.15));z-index:2;pointer-events:none}
-@media (max-width:767px){.hero-logo-secondaire{height:40px;right:1rem;bottom:0.9rem}}
+    @media (max-width:767px){.hero-logo-secondaire{height:40px;right:1rem;bottom:0.9rem}}
 
     .section{padding:3.5rem 0}
     .section-header{text-align:center;margin-bottom:2.2rem}
     .section-kicker{font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--color-muted);margin-bottom:0.4rem}
     .section-title{font-family:'Playfair Display',serif;font-size:1.7rem;margin-bottom:0.4rem}
     .section-subtitle{font-size:0.95rem;color:var(--color-muted);max-width:520px;margin:0 auto}
+
+    .seasonal-wrap{padding-top:0.5rem}
+    .seasonal-card{display:grid;gap:1.5rem;align-items:center;background:linear-gradient(135deg,#fff8f1,#fdf0e2);border:1px solid rgba(200,138,91,0.14);border-radius:var(--radius-lg);padding:1.4rem;box-shadow:var(--shadow-soft);overflow:hidden}
+    .seasonal-media{border-radius:20px;overflow:hidden;min-height:260px;background:#f7e7d8}
+    .seasonal-media img{width:100%;height:100%;object-fit:cover}
+    .seasonal-content{display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+    .seasonal-badge{display:inline-flex;align-items:center;gap:0.45rem;padding:0.45rem 0.9rem;border-radius:999px;background:#fff;border:1px solid rgba(0,0,0,0.06);font-size:0.8rem;font-weight:600;margin-bottom:1rem}
+    .seasonal-title{font-family:'Playfair Display',serif;font-size:2rem;line-height:1.2;margin-bottom:0.8rem}
+    .seasonal-name{font-size:1.05rem;font-weight:700;margin-bottom:0.45rem}
+    .seasonal-desc{font-size:0.95rem;color:var(--color-muted);margin-bottom:1.2rem;max-width:560px}
+    .btn-seasonal{display:inline-flex;align-items:center;justify-content:center;padding:0.95rem 1.6rem;border-radius:999px;background:#F1CB46;color:#2b1c10;font-size:0.96rem;font-weight:700;box-shadow:0 16px 40px rgba(241,203,70,0.35);animation:seasonalBlink 1s ease-in-out infinite, seasonalMove 1.8s ease-in-out infinite;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}
+    .btn-seasonal:hover{filter:brightness(0.96);box-shadow:0 18px 46px rgba(241,203,70,0.45)}
+    @keyframes seasonalBlink{0%,100%{opacity:1}50%{opacity:.72}}
+    @keyframes seasonalMove{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.04)}}
 
     .best-grid{display:grid;gap:1.8rem}
     .cookie-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);display:flex;flex-direction:column}
@@ -119,7 +133,7 @@
 
     .calendly-wrap{background:#fff;border-radius:var(--radius-lg);box-shadow:var(--shadow-soft);overflow:hidden;border:1px solid rgba(0,0,0,0.06)}
     .calendly-embed{min-width:320px;height:700px}
-@media (max-width:767px){.calendly-embed{height:820px}}
+    @media (max-width:767px){.calendly-embed{height:820px}}
 
     .contact-band{background:linear-gradient(120deg,#000,#3b2416);color:#fff;border-radius:var(--radius-lg);padding:1.8rem 1.5rem;display:grid;gap:1.2rem;align-items:center;box-shadow:var(--shadow-soft)}
     .contact-band-title{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.3rem}
@@ -141,11 +155,11 @@
     .footer-logo-secondary{height:26px;width:auto;display:block;}
     .sep{margin:0 8px;opacity:.45}.madeby{color:inherit;text-decoration:none;opacity:.75}.madeby:hover{opacity:1;text-decoration:underline}
 
-
     @media (min-width:768px){
       .hero{padding:4rem 0 4.5rem}
       .hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
       .hero-title{font-size:2.8rem}
+      .seasonal-card{grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);padding:1.8rem}
       .best-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
       .why-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
       .contact-band{grid-template-columns:1.3fr 1fr;padding:2rem 2.2rem}
@@ -159,6 +173,8 @@
       .burger{display:inline-flex}
       .hero{padding-top:2.3rem}
       .hero-media{min-height:240px}
+      .seasonal-title{font-size:1.6rem}
+      .seasonal-media{min-height:220px}
     }
   </style>
 </head>
@@ -199,7 +215,7 @@
         <h1 class="hero-title">La Casa Del Cookie, Le cookie plus balèze que mamie.</h1>
         <div class="hero-cta">
           <a href="produits.html" class="btn-primary">Découvrir les cookies</a>
-         <a href="https://calendly.com/lacasadelcookie/click-collect" class="btn-cc" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
+          <a href="https://calendly.com/lacasadelcookie/click-collect" class="btn-cc" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
         </div>
         <p class="hero-note">Bienvenue dans mon atelier, qui sera bientôt votre nouveau péché mignon.</p>
       </div>
@@ -217,6 +233,23 @@
         <div class="hero-tag">
           <span>✨</span>
           <span>Faits maison</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section seasonal-wrap" aria-labelledby="edition-speciale">
+    <div class="container">
+      <div class="seasonal-card">
+        <div class="seasonal-media">
+          <img src="images/edition-paques.jpeg" alt="Édition spéciale de Pâques La Casa Del Cookie">
+        </div>
+        <div class="seasonal-content">
+          <div class="seasonal-badge">🐣 Édition spéciale du moment</div>
+          <h2 class="seasonal-title" id="edition-speciale">Pâques !!</h2>
+          <p class="seasonal-name">Le cookie de Pâques</p>
+          <p class="seasonal-desc">Une création ultra gourmande de saison, pensée pour Pâques, avec tout ce qu’il faut pour faire craquer les petits comme les grands.</p>
+          <a class="btn-seasonal" href="https://wa.me/33782163179?text=Bonjour%2C%20je%20souhaite%20commander%20l%27%C3%A9dition%20sp%C3%A9ciale%20de%20P%C3%A2ques%20de%20La%20Casa%20Del%20Cookie." target="_blank" rel="noreferrer">Commander</a>
         </div>
       </div>
     </div>
@@ -294,25 +327,25 @@
   </section>
 
   <section class="section" id="click-collect" aria-labelledby="cc-title">
-  <div class="container">
-    <div class="section-header">
-      <p class="section-kicker">Click &amp; Collect</p>
-      <h2 class="section-title" id="cc-title">Réservez votre créneau de retrait</h2>
-      <p class="section-subtitle">Choisissez un horaire, validez, et récupérez vos cookies au labo à Soumoulou.</p>
-    </div>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-kicker">Click &amp; Collect</p>
+        <h2 class="section-title" id="cc-title">Réservez votre créneau de retrait</h2>
+        <p class="section-subtitle">Choisissez un horaire, validez, et récupérez vos cookies au labo à Soumoulou.</p>
+      </div>
 
-    <div class="calendly-wrap">
-     <div class="calendly-inline-widget" data-url="https://calendly.com/lacasadelcookie/click-collect?primary_color=bc8c60" style="min-width:320px;height:700px;"></div>
+      <div class="calendly-wrap">
+        <div class="calendly-inline-widget" data-url="https://calendly.com/lacasadelcookie/click-collect?primary_color=bc8c60" style="min-width:320px;height:700px;"></div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <section class="section" id="contact" aria-labelledby="contact-title">
     <div class="container">
       <div class="contact-band">
         <div>
           <h2 class="contact-band-title" id="contact-title">Contact &amp; commandes</h2>
-          <p class="contact-band-text">Les cookies sont préparés sur commande, avec un délai minimum de 48h à l’avance,  afin de garantir fraîcheur et gourmandise.
+          <p class="contact-band-text">Les cookies sont préparés sur commande, avec un délai minimum de 48h à l’avance, afin de garantir fraîcheur et gourmandise.
 Le retrait est possible au laboratoire à Soumoulou, ou une livraison peut être proposée selon votre zone.
 Certains cookies sont également disponibles chez nos commerces partenaires : la liste est communiquée sur les réseaux sociaux.</p>
         </div>
@@ -321,13 +354,13 @@ Certains cookies sont également disponibles chez nos commerces partenaires : la
             <span>💬</span>
             <span>Écrire sur WhatsApp</span>
           </a>
-        <a href="https://calendly.com/lacasadelcookie/click-collect" class="btn-cc" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
+          <a href="https://calendly.com/lacasadelcookie/click-collect" class="btn-cc" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
         </div>
       </div>
     </div>
   </section>
 </main>
-  
+
 <footer>
   <div class="container footer-inner">
     <div class="footer-top">
@@ -353,7 +386,6 @@ Certains cookies sont également disponibles chez nos commerces partenaires : la
     </div>
   </div>
 </footer>
-
 
 <script>
   (function(){
@@ -425,6 +457,6 @@ Certains cookies sont également disponibles chez nos commerces partenaires : la
     }
   })();
 </script>
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </body>
 </html>
