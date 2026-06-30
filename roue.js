@@ -19,14 +19,14 @@
   const SPIN_TURNS = 6;               // tours complets minimum
 
   // Secteurs de la roue, dans l'ordre horaire à partir du haut.
-  // Les wedges démarrent en haut : secteur 1 = 0°→72° (centré à 36°), etc.
+  // Le secteur -10% est centré en haut (0°) : au repos, le pointeur le vise pile.
   // center = angle horaire (sens des aiguilles, 0 = haut) du centre du secteur.
   const SECTORS = [
-    { center: 36,  color: '#E8D9C0', text: '#5C3A1E', lines: ['-10%'] },                       // clair
-    { center: 108, color: '#D4B896', text: '#5C3A1E', lines: ['-5%'] },                        // clair
-    { center: 180, color: '#C9A47A', text: '#5C3A1E', lines: ['-15%'] },                       // clair
-    { center: 252, color: '#8B5A3C', text: '#FFFFFF', lines: ['BOÎTE 6', 'COOKIES', 'OFFERTE'] }, // foncé
-    { center: 324, color: '#A0734E', text: '#FFFFFF', lines: ['BOÎTE 4', 'COOKIES', 'OFFERTE'] }, // foncé
+    { center: 0,   color: '#E8D9C0', text: '#5C3A1E', lines: ['-10%'] },                       // clair (repos)
+    { center: 72,  color: '#D4B896', text: '#5C3A1E', lines: ['-5%'] },                        // clair
+    { center: 144, color: '#C9A47A', text: '#5C3A1E', lines: ['-15%'] },                       // clair
+    { center: 216, color: '#8B5A3C', text: '#FFFFFF', lines: ['BOÎTE 6', 'COOKIES', 'OFFERTE'] }, // foncé
+    { center: 288, color: '#A0734E', text: '#FFFFFF', lines: ['BOÎTE 4', 'COOKIES', 'OFFERTE'] }, // foncé
   ];
 
   // Mapping lot renvoyé par le backend -> index du secteur.
