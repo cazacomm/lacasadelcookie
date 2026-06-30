@@ -1,0 +1,327 @@
+/* ==========================================================================
+   La Casa Del Cookie — Pop-up "Roue de la fortune"
+   Styles autonomes (préfixés .casa-roue*) pour ne pas impacter le site.
+   Polices réutilisées du site : Playfair Display (titres) + Poppins (corps).
+   ========================================================================== */
+
+:root {
+  --casa-beige: #FAF3E7;
+  --casa-brun: #5C3A1E;        /* brun chocolat foncé */
+  --casa-brun-clair: #8B5A3C;
+  --casa-bordure: #D4B896;
+  --casa-dore: #C9A47A;
+  --casa-erreur: #B83C2C;
+  --casa-gris: #9A8167;
+}
+
+/* --- Overlay sombre ------------------------------------------------------- */
+.casa-roue-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.casa-roue-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- Conteneur principal ------------------------------------------------- */
+.casa-roue-modal {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  max-height: 95vh;
+  overflow-y: auto;
+  background: var(--casa-beige);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  transform: translateY(16px) scale(0.98);
+  transition: transform 0.3s ease;
+}
+.casa-roue-overlay.is-open .casa-roue-modal {
+  transform: translateY(0) scale(1);
+}
+
+/* Bouton fermer (croix) */
+.casa-roue-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--casa-brun);
+  background: rgba(255, 255, 255, 0.6);
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 3;
+}
+.casa-roue-close:hover { background: #fff; transform: scale(1.05); }
+.casa-roue-close svg { width: 20px; height: 20px; }
+
+/* --- Disposition 2 colonnes (desktop) ------------------------------------ */
+.casa-roue-body {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .casa-roue-body {
+    flex-direction: row;
+    align-items: center;
+    gap: 36px;
+  }
+  .casa-roue-left,
+  .casa-roue-right { flex: 1 1 50%; }
+}
+
+/* --- Colonne roue -------------------------------------------------------- */
+.casa-roue-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.casa-roue-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+}
+@media (max-width: 767px) {
+  .casa-roue-wrap { max-width: 280px; }
+}
+.casa-roue-svg { display: block; width: 100%; height: auto; }
+
+/* Le groupe qui tourne */
+.casa-roue-spin {
+  transform-box: view-box;
+  transform-origin: 160px 160px;
+  transform: rotate(0deg);
+}
+.casa-roue-spin.is-spinning {
+  transition: transform 5s cubic-bezier(0.17, 0.67, 0.18, 0.99);
+}
+
+/* --- Colonne formulaire -------------------------------------------------- */
+.casa-roue-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--casa-brun);
+  margin: 0 0 8px;
+  line-height: 1.15;
+}
+.casa-roue-subtitle {
+  font-size: 0.98rem;
+  color: #6b5840;
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+.casa-roue-subtitle strong { color: var(--casa-brun); font-weight: 700; }
+
+.casa-roue-formlabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--casa-brun);
+  margin: 0 0 12px;
+}
+
+.casa-roue-form { display: flex; flex-direction: column; gap: 12px; }
+
+/* Champs en pilule avec icône */
+.casa-roue-field { position: relative; }
+.casa-roue-field svg.casa-roue-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--casa-dore);
+  pointer-events: none;
+}
+.casa-roue-form input {
+  width: 100%;
+  min-height: 48px;
+  background: #fff;
+  border: 1px solid var(--casa-bordure);
+  border-radius: 999px;
+  padding: 14px 20px 14px 48px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.casa-roue-form input::placeholder { color: #b9a98f; }
+.casa-roue-form input:focus {
+  border-color: var(--casa-brun);
+  box-shadow: 0 0 0 3px rgba(92, 58, 30, 0.12);
+}
+.casa-roue-form input.has-error { border-color: var(--casa-erreur); }
+
+/* Messages d'erreur sous le champ */
+.casa-roue-error {
+  display: none;
+  font-size: 0.78rem;
+  color: var(--casa-erreur);
+  margin: 2px 0 0 18px;
+}
+.casa-roue-error.is-visible { display: block; }
+
+/* Bouton principal */
+.casa-roue-submit {
+  width: 100%;
+  min-height: 56px;
+  margin-top: 6px;
+  background: var(--casa-brun);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 999px;
+  padding: 18px 40px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+.casa-roue-submit:hover:not(:disabled) { background: #4a2e16; transform: scale(1.02); }
+.casa-roue-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Mention légale sous le bouton */
+.casa-roue-legal {
+  font-size: 0.72rem;
+  color: #998a73;
+  margin: 12px 0 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Message d'erreur global (réseau, 429...) */
+.casa-roue-global-error {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(184, 60, 44, 0.1);
+  color: var(--casa-erreur);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.casa-roue-global-error.is-visible { display: block; }
+
+/* --- Écran de victoire --------------------------------------------------- */
+.casa-roue-win {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 32px;
+  background: var(--casa-beige);
+  border-radius: 24px;
+  z-index: 4;
+}
+.casa-roue-win.is-visible { display: flex; }
+.casa-roue-win-cookie {
+  font-size: 72px;
+  line-height: 1;
+  animation: casaBounce 1.2s ease infinite;
+}
+@keyframes casaBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.casa-roue-win-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--casa-brun);
+  margin: 14px 0 6px;
+}
+.casa-roue-win-sub { font-size: 1rem; color: #6b5840; margin: 0 0 4px; }
+.casa-roue-win-prize {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--casa-brun);
+  margin: 4px 0 16px;
+}
+.casa-roue-win-code {
+  display: inline-block;
+  background: #fff;
+  border: 2px dashed var(--casa-dore);
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--casa-brun);
+  margin-bottom: 16px;
+}
+.casa-roue-win-note {
+  font-size: 0.88rem;
+  color: #6b5840;
+  max-width: 380px;
+  line-height: 1.5;
+  margin: 0 0 22px;
+}
+.casa-roue-win-close {
+  background: var(--casa-brun);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 14px 36px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.casa-roue-win-close:hover { background: #4a2e16; transform: scale(1.02); }
+
+/* --- Responsive fin ------------------------------------------------------ */
+@media (max-width: 767px) {
+  .casa-roue-modal { padding: 28px 20px; }
+  .casa-roue-title { font-size: 1.6rem; }
+}
+@media (max-width: 480px) {
+  .casa-roue-overlay { padding: 0; }
+  .casa-roue-modal {
+    max-width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    padding: 24px 18px 32px;
+  }
+  .casa-roue-win { border-radius: 0; }
+}
+
+/* --- Accessibilité : mouvement réduit ------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .casa-roue-spin.is-spinning {
+    transition: transform 1s ease-out;
+  }
+  .casa-roue-win-cookie { animation: none; }
+  .casa-roue-overlay,
+  .casa-roue-modal { transition: none; }
+}
