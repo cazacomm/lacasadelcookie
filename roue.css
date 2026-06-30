@@ -118,6 +118,20 @@
   transition: transform 5s cubic-bezier(0.17, 0.67, 0.18, 0.99);
 }
 
+/* Labels des secteurs (SVG text). Tailles en unités viewBox -> elles suivent
+   l'échelle de la roue ; la media query les réduit encore sur petits écrans. */
+.casa-roue-label {
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.casa-roue-label-pct { font-size: 16px; }
+.casa-roue-label-box { font-size: 11px; }
+@media (max-width: 480px) {
+  .casa-roue-label-pct { font-size: 13px; }
+  .casa-roue-label-box { font-size: 9px; }
+}
+
 /* --- Colonne formulaire -------------------------------------------------- */
 .casa-roue-title {
   font-family: 'Playfair Display', Georgia, serif;

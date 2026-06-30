@@ -19,13 +19,14 @@
   const SPIN_TURNS = 6;               // tours complets minimum
 
   // Secteurs de la roue, dans l'ordre horaire à partir du haut.
+  // Les wedges démarrent en haut : secteur 1 = 0°→72° (centré à 36°), etc.
   // center = angle horaire (sens des aiguilles, 0 = haut) du centre du secteur.
   const SECTORS = [
-    { center: 0,   color: '#E8D9C0', text: '#5C3A1E', lines: ['-10%'],                 size: 24 },
-    { center: 72,  color: '#D4B896', text: '#5C3A1E', lines: ['-5%'],                  size: 24 },
-    { center: 144, color: '#C9A47A', text: '#5C3A1E', lines: ['-15%'],                 size: 24 },
-    { center: 216, color: '#8B5A3C', text: '#FFFFFF', lines: ['BOÎTE 6', 'COOKIES', 'OFFERTE'], size: 12 },
-    { center: 288, color: '#A0734E', text: '#FFFFFF', lines: ['BOÎTE 4', 'COOKIES', 'OFFERTE'], size: 12 },
+    { center: 36,  color: '#E8D9C0', text: '#5C3A1E', lines: ['-10%'] },                       // clair
+    { center: 108, color: '#D4B896', text: '#5C3A1E', lines: ['-5%'] },                        // clair
+    { center: 180, color: '#C9A47A', text: '#5C3A1E', lines: ['-15%'] },                       // clair
+    { center: 252, color: '#8B5A3C', text: '#FFFFFF', lines: ['BOÎTE 6', 'COOKIES', 'OFFERTE'] }, // foncé
+    { center: 324, color: '#A0734E', text: '#FFFFFF', lines: ['BOÎTE 4', 'COOKIES', 'OFFERTE'] }, // foncé
   ];
 
   // Mapping lot renvoyé par le backend -> index du secteur.
@@ -70,7 +71,8 @@
 
   // --- Géométrie SVG -------------------------------------------------------
 
-  const CX = 160, CY = 160, R = 148, LABEL_R = 96;
+  const CX = 160, CY = 160, R = 148;
+  const LABEL_R = R * 0.62; // ~92 : labels à 62 % du rayon (spec)
 
   // Point sur le cercle pour un angle horaire (0 = haut, sens horaire).
   function pointAt(angleDeg, radius) {
@@ -90,11 +92,27 @@
            `A ${radius} ${radius} 0 ${largeArc} 1 ${p2.x.toFixed(2)} ${p2.y.toFixed(2)} Z`;
   }
 
+  // Cookie stylisé (SVG inline) pour le moyeu central.
+  function buildCookieHub() {
+    // Pépites dispersées de façon naturelle (dx, dy depuis le centre, rayon).
+    const chips = [
+      [-8, -6, 3], [6, -9, 2.5], [10, 4, 3.5],
+      [-5, 8, 3], [2, 1, 2], [-11, 3, 2.5], [8, 11, 2.5],
+    ];
+    let dots = '';
+    chips.forEach(([dx, dy, r]) => {
+      dots += `<circle cx="${(CX + dx).toFixed(1)}" cy="${(CY + dy).toFixed(1)}" r="${r}" fill="#3D2817"/>`;
+    });
+    return `
+    <circle cx="${CX}" cy="${CY}" r="40" fill="#5C3A1E" stroke="#FFFFFF" stroke-width="3"/>
+    <circle cx="${CX}" cy="${CY}" r="25" fill="#D4B896" stroke="#A0734E" stroke-width="1"/>
+    ${dots}`;
+  }
+
   // Construit le SVG complet de la roue.
   function buildWheelSVG() {
     let wedges = '';
     let labels = '';
-    let hearts = '';
 
     SECTORS.forEach((s) => {
       const start = s.center - 36;
@@ -103,47 +121,50 @@
       // Wedge
       wedges += `<path d="${wedgePath(start, end, R)}" fill="${s.color}" stroke="#FFFFFF" stroke-width="2"/>`;
 
-      // Petit cœur décoratif sur la frontière entre secteurs (subtil)
-      const hp = pointAt(end, R - 16);
-      hearts += `<text x="${hp.x.toFixed(1)}" y="${hp.y.toFixed(1)}" text-anchor="middle" ` +
-                `dominant-baseline="central" font-size="11" fill="rgba(255,255,255,0.45)">♥</text>`;
-
-      // Label : groupe pivoté sur l'angle du secteur, texte multi-lignes.
-      const flip = s.center > 90 && s.center < 270; // retourner pour rester lisible en bas
+      // Label : groupe pivoté sur l'angle du secteur pour suivre l'orientation radiale.
+      // On retourne de 180° les secteurs de la moitié basse pour garder une lecture à l'endroit.
+      const flip = s.center > 90 && s.center < 270;
       const lp = pointAt(s.center, LABEL_R);
-      const n = s.lines.length;
-      const lineH = s.size * 1.05;
-      const startY = lp.y - ((n - 1) * lineH) / 2;
-      let tspans = '';
-      s.lines.forEach((line, i) => {
-        tspans += `<tspan x="${lp.x.toFixed(1)}" y="${(startY + i * lineH).toFixed(1)}">${line}</tspan>`;
-      });
       const rot = flip ? s.center + 180 : s.center;
+      const cls = s.lines.length > 1 ? 'casa-roue-label casa-roue-label-box' : 'casa-roue-label casa-roue-label-pct';
+
+      // Texte multi-lignes via <tspan> + dy (centré verticalement sur le point d'ancrage).
+      let tspans;
+      if (s.lines.length === 1) {
+        tspans = `<tspan x="${lp.x.toFixed(1)}">${s.lines[0]}</tspan>`;
+      } else {
+        tspans = s.lines
+          .map((line, i) => {
+            const dy = i === 0 ? '-1.05em' : '1.05em';
+            return `<tspan x="${lp.x.toFixed(1)}" dy="${dy}">${line}</tspan>`;
+          })
+          .join('');
+      }
+
       labels += `<g transform="rotate(${rot} ${lp.x.toFixed(1)} ${lp.y.toFixed(1)})">` +
-                `<text text-anchor="middle" dominant-baseline="central" ` +
-                `font-family="'Playfair Display', Georgia, serif" font-weight="700" ` +
-                `font-size="${s.size}" fill="${s.text}">${tspans}</text></g>`;
+                `<text class="${cls}" x="${lp.x.toFixed(1)}" y="${lp.y.toFixed(1)}" ` +
+                `text-anchor="middle" dominant-baseline="middle" fill="${s.text}">${tspans}</text></g>`;
     });
 
-    // Clous décoratifs sur le pourtour
+    // Clous décoratifs : 10 points répartis tous les 36° sur la bordure extérieure.
+    // Couleur crème (#FAF3E7) pour rester visibles sur la jante brun foncé.
     let studs = '';
-    for (let i = 0; i < 20; i++) {
-      const p = pointAt(i * 18, R - 5);
+    for (let i = 0; i < 10; i++) {
+      const p = pointAt(i * 36, R + 2);
       studs += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="#FAF3E7"/>`;
     }
 
     return `
 <svg class="casa-roue-svg" viewBox="0 0 320 320" role="img" aria-label="Roue de la fortune La Casa Del Cookie">
-  <!-- Partie rotative -->
+  <!-- Partie rotative (secteurs + labels solidaires) -->
   <g class="casa-roue-spin" id="casaRoueSpin">
     <circle cx="${CX}" cy="${CY}" r="${R + 6}" fill="#5C3A1E"/>
     ${wedges}
-    ${hearts}
     ${studs}
+    ${labels}
   </g>
-  <!-- Moyeu central fixe avec cœur blanc -->
-  <circle cx="${CX}" cy="${CY}" r="34" fill="#5C3A1E" stroke="#FFFFFF" stroke-width="3"/>
-  <text x="${CX}" y="${CY + 1}" text-anchor="middle" dominant-baseline="central" font-size="30" fill="#FFFFFF">♥</text>
+  <!-- Moyeu central fixe : cookie stylisé -->
+  ${buildCookieHub()}
   <!-- Pointeur fixe en haut -->
   <polygon points="160,40 145,6 175,6" fill="#5C3A1E" stroke="#FFFFFF" stroke-width="2"/>
 </svg>`;
@@ -212,7 +233,7 @@
       <p class="casa-roue-win-sub">Tu as gagné :</p>
       <p class="casa-roue-win-prize" id="casaWinPrize"></p>
       <div class="casa-roue-win-code" id="casaWinCode"></div>
-      <p class="casa-roue-win-note">Un email de confirmation t'a été envoyé. Présente ton code en magasin ou lors de ta prochaine commande.</p>
+      <p class="casa-roue-win-note">Un email de confirmation t'a été envoyé. Présente ton code lors de ta prochaine commande chez La Casa Del Cookie.</p>
       <button type="button" class="casa-roue-win-close" id="casaWinClose">Fermer</button>
     </div>
   </div>
