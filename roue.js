@@ -15,7 +15,6 @@
     : 'https://roue.lacasadelcookie.fr/api/spin';
 
   const POPUP_DELAY = 5000;            // 5 s après chargement
-  const DISMISS_DAYS = 7;              // ré-affichage après fermeture sans jouer
   const SPIN_TURNS = 6;               // tours complets minimum
 
   // Secteurs de la roue, dans l'ordre horaire à partir du haut.
@@ -51,19 +50,6 @@
 
   function hasPlayed() {
     return localStorage.getItem('casa_played') === 'true';
-  }
-  function isDismissed() {
-    const until = localStorage.getItem('casa_popup_dismissed');
-    if (!until) return false;
-    if (Date.now() > Number(until)) {
-      localStorage.removeItem('casa_popup_dismissed');
-      return false;
-    }
-    return true;
-  }
-  function setDismissed() {
-    const until = Date.now() + DISMISS_DAYS * 24 * 60 * 60 * 1000;
-    localStorage.setItem('casa_popup_dismissed', String(until));
   }
   function setPlayed() {
     localStorage.setItem('casa_played', 'true');
@@ -424,8 +410,9 @@
   // --- Initialisation ------------------------------------------------------
 
   function init() {
-    // Ne rien faire si déjà joué ou récemment fermé.
-    if (hasPlayed() || isDismissed()) return;
+    // Ne jamais réafficher si l'utilisateur a déjà joué.
+    // (Aucune mémorisation de fermeture : le pop-up revient à chaque visite tant qu'on n'a pas joué.)
+    if (hasPlayed()) return;
 
     // Injecter le markup.
     const holder = document.createElement('div');
@@ -435,8 +422,8 @@
     // Branchements.
     document.getElementById('casaRoueForm').addEventListener('submit', handleSubmit);
 
+    // Croix : ferme seulement pour la session en cours (rien dans le localStorage).
     document.getElementById('casaRoueClose').addEventListener('click', () => {
-      setDismissed();
       closePopup();
     });
 
@@ -445,13 +432,11 @@
       closePopup();
     });
 
-    // ESC ferme (= dismiss si l'utilisateur n'a pas joué).
+    // ESC : ferme seulement pour la session en cours (rien dans le localStorage).
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         const overlay = document.getElementById('casaRoueOverlay');
         if (overlay && overlay.classList.contains('is-open')) {
-          const played = document.getElementById('casaRoueWin').classList.contains('is-visible');
-          if (!played) setDismissed();
           closePopup();
         }
       }
