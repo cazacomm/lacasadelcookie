@@ -115,6 +115,10 @@
     .seasonal-title{font-family:'Playfair Display',serif;font-size:2rem;line-height:1.2;margin-bottom:0.8rem}
     .seasonal-name{font-size:1.05rem;font-weight:700;margin-bottom:0.45rem}
     .seasonal-desc{font-size:0.95rem;color:var(--color-muted);margin-bottom:1.2rem;max-width:560px}
+    .seasonal-price{display:inline-flex;align-items:baseline;gap:0.55rem;margin-bottom:1.3rem;padding:0.55rem 1.1rem;background:#fff;border:1px solid rgba(200,138,91,0.2);border-radius:14px}
+    .seasonal-price strong{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--color-primary-dark)}
+    .seasonal-price span{font-size:0.9rem;color:var(--color-muted)}
+    .seasonal-card--pizza .seasonal-media{background:#f7e7d8}
     .btn-seasonal{display:inline-flex;align-items:center;justify-content:center;padding:0.95rem 1.6rem;border-radius:999px;background:#F1CB46;color:#2b1c10;font-size:0.96rem;font-weight:700;box-shadow:0 16px 40px rgba(241,203,70,0.35);animation:seasonalBlink 1s ease-in-out infinite, seasonalMove 1.8s ease-in-out infinite;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}
     .btn-seasonal:hover{filter:brightness(0.96);box-shadow:0 18px 46px rgba(241,203,70,0.45)}
     @keyframes seasonalBlink{0%,100%{opacity:1}50%{opacity:.72}}
@@ -250,20 +254,16 @@
 
 <section class="section seasonal-wrap" aria-labelledby="edition-speciale">
     <div class="container">
-      <div class="seasonal-card">
+      <div class="seasonal-card seasonal-card--pizza">
         <div class="seasonal-media">
-          <img src="images/carte-cadeau.jpeg" alt="Carte cadeau La Casa Del Cookie">
+          <img src="images/pizzacookie.jpeg" alt="La Pizza Cookie de La Casa Del Cookie">
         </div>
         <div class="seasonal-content">
-          <div class="seasonal-badge">🎁 Édition spéciale du moment</div>
-          <h2 class="seasonal-title" id="edition-speciale">La carte cadeau La Casa 🎁</h2>
-          <p class="seasonal-desc">Offrez une pause gourmande avec la carte cadeau La Casa.<br>Des cookies artisanaux qui se savourent jusqu'à la dernière miette 😏</p>
-          <ul class="seasonal-amounts">
-            <li><strong>20€</strong> <span>Pour découvrir 🍪</span></li>
-            <li><strong>30€</strong> <span>Le plus offert 🎁</span></li>
-            <li><strong>50€</strong> <span>Pour les vrais gourmands 😏</span></li>
-          </ul>
-          <a class="btn-seasonal" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20une%20carte%20cadeau%20La%20Casa%20Del%20Cookie.%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Offrir une carte cadeau</a>
+          <div class="seasonal-badge">🍕 Édition spéciale du moment</div>
+          <h2 class="seasonal-title" id="edition-speciale">La pizza de La Casa 🍕</h2>
+          <p class="seasonal-desc">Un cookie en format XXL, découpé en 8 parts de gourmandise. Moelleux au cœur, généreux en toppings, à partager… ou pas !</p>
+          <div class="seasonal-price"><strong>24,90 €</strong> <span>la pizza cookie · 8 parts</span></div>
+          <a class="btn-seasonal" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20la%20Pizza%20Cookie%20La%20Casa%20Del%20Cookie.%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander la pizza cookie</a>
         </div>
       </div>
     </div>
@@ -304,6 +304,27 @@
             <p class="cookie-desc">Pépites de chocolat au lait, éclats de pistache torréfiés et cœur pistache fondant… Assez intense pour faire voyager mamie sans passeport.</p>
           </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section seasonal-wrap" aria-labelledby="carte-cadeau">
+    <div class="container">
+      <div class="seasonal-card">
+        <div class="seasonal-media">
+          <img src="images/carte-cadeau.jpeg" alt="Carte cadeau La Casa Del Cookie">
+        </div>
+        <div class="seasonal-content">
+          <div class="seasonal-badge">🎁 Idée gourmande</div>
+          <h2 class="seasonal-title" id="carte-cadeau">La carte cadeau La Casa 🎁</h2>
+          <p class="seasonal-desc">Offrez une pause gourmande avec la carte cadeau La Casa.<br>Des cookies artisanaux qui se savourent jusqu'à la dernière miette 😏</p>
+          <ul class="seasonal-amounts">
+            <li><strong>20€</strong> <span>Pour découvrir 🍪</span></li>
+            <li><strong>30€</strong> <span>Le plus offert 🎁</span></li>
+            <li><strong>50€</strong> <span>Pour les vrais gourmands 😏</span></li>
+          </ul>
+          <a class="btn-seasonal" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20une%20carte%20cadeau%20La%20Casa%20Del%20Cookie.%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Offrir une carte cadeau</a>
+        </div>
       </div>
     </div>
   </section>
