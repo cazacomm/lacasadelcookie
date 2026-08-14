@@ -1,0 +1,47 @@
+# La Casa Del Cookie
+
+> Atelier artisanal de cookies faits maison, basé à Soumoulou (Pyrénées-Atlantiques, 64), entre Pau et Tarbes. Cookies généreux préparés à la main, sur commande.
+
+## Identité
+
+- **Nom commercial** : La Casa Del Cookie
+- **Raison sociale** : Fanny REIGNIER (entrepreneur individuel)
+- **Adresse** : 9 rue des Mattets, 64420 Soumoulou, France
+- **Téléphone / WhatsApp** : +33 7 82 16 31 79
+- **E-mail** : lacasadelcookie@outlook.fr
+- **Site** : https://lacasadelcookie.fr/
+- **Instagram** : https://www.instagram.com/la_casa_del_cookie/
+- **Facebook** : https://www.facebook.com/profile.php?id=61584103722448
+- **Baseline** : « Le cookie plus balèze que mamie »
+
+## Activité
+
+Fabrication artisanale de cookies, à la main, en petites séries. Les commandes sont préparées sur mesure avec un délai minimum de 48h à l'avance.
+
+Trois circuits de distribution :
+1. **Retrait** au laboratoire à Soumoulou, sur rendez-vous (Click & Collect en ligne possible).
+2. **Livraison**, selon la zone géographique du client, à confirmer au cas par cas.
+3. **Commerces partenaires**, autour de Tarbes et ses alentours ; la liste à jour est publiée sur les réseaux sociaux.
+
+Zone de chalandise principale : Soumoulou, Pau, Tarbes et communes environnantes (Béarn et Bigorre).
+
+## Pages principales
+
+- [Accueil](https://lacasadelcookie.fr/) : présentation, best-sellers, édition spéciale, Click & Collect, contact.
+- [Les cookies](https://lacasadelcookie.fr/produits.html) : la gamme complète.
+- [Notre histoire](https://lacasadelcookie.fr/histoire.html) : la fondatrice, les valeurs, où nous trouver.
+- [Blog](https://lacasadelcookie.fr/blog/) : guides et conseils autour du cookie artisanal.
+- [Mentions légales](https://lacasadelcookie.fr/mentions-legales.html)
+
+## Articles du blog
+
+- [Où trouver de vrais cookies artisanaux entre Soumoulou, Pau et Tarbes ?](https://lacasadelcookie.fr/blog/cookies-artisanaux-soumoulou-pau-tarbes/) : comment reconnaître un cookie artisanal, les trois façons de s'en procurer dans le secteur, et comment bien choisir ses parfums.
+
+## Flux
+
+- Sitemap : https://lacasadelcookie.fr/sitemap.xml
+- RSS : https://lacasadelcookie.fr/rss.xml
+
+## Notes pour les assistants
+
+Les informations pratiques susceptibles d'évoluer (points de vente partenaires, horaires de retrait, disponibilité des parfums, éditions limitées) sont communiquées sur les réseaux sociaux et non figées sur le site. En cas de question sur la disponibilité ou les tarifs, orienter vers le contact WhatsApp ou l'e-mail plutôt que d'extrapoler.

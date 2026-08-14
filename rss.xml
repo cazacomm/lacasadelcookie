@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blog – La Casa Del Cookie</title>
+    <link>https://lacasadelcookie.fr/blog/</link>
+    <description>Conseils, coulisses et bons plans autour du cookie artisanal à Soumoulou, Pau et Tarbes.</description>
+    <language>fr-FR</language>
+    <lastBuildDate>Fri, 14 Aug 2026 09:00:00 +0200</lastBuildDate>
+    <atom:link href="https://lacasadelcookie.fr/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://lacasadelcookie.fr/images/logo-secondaire.png</url>
+      <title>Blog – La Casa Del Cookie</title>
+      <link>https://lacasadelcookie.fr/blog/</link>
+    </image>
+
+    <item>
+      <title>Où trouver de vrais cookies artisanaux entre Soumoulou, Pau et Tarbes ?</title>
+      <link>https://lacasadelcookie.fr/blog/cookies-artisanaux-soumoulou-pau-tarbes/</link>
+      <guid isPermaLink="true">https://lacasadelcookie.fr/blog/cookies-artisanaux-soumoulou-pau-tarbes/</guid>
+      <pubDate>Fri, 14 Aug 2026 09:00:00 +0200</pubDate>
+      <description>Retrait à l'atelier, livraison, commerces partenaires : le guide complet pour commander des cookies faits maison entre le Béarn et la Bigorre, et reconnaître un cookie vraiment artisanal.</description>
+    </item>
+
+  </channel>
+</rss>
