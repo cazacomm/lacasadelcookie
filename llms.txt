@@ -9,7 +9,7 @@
 - **Adresse** : 9 rue des Mattets, 64420 Soumoulou, France
 - **Téléphone / WhatsApp** : +33 7 82 16 31 79
 - **E-mail** : lacasadelcookie@outlook.fr
-- **Site** : https://lacasadelcookie.fr/
+- **Site** : https://www.lacasadelcookie.fr/
 - **Instagram** : https://www.instagram.com/la_casa_del_cookie/
 - **Facebook** : https://www.facebook.com/profile.php?id=61584103722448
 - **Baseline** : « Le cookie plus balèze que mamie »
@@ -27,20 +27,20 @@ Zone de chalandise principale : Soumoulou, Pau, Tarbes et communes environnantes
 
 ## Pages principales
 
-- [Accueil](https://lacasadelcookie.fr/) : présentation, best-sellers, édition spéciale, Click & Collect, contact.
-- [Les cookies](https://lacasadelcookie.fr/produits.html) : la gamme complète.
-- [Notre histoire](https://lacasadelcookie.fr/histoire.html) : la fondatrice, les valeurs, où nous trouver.
-- [Blog](https://lacasadelcookie.fr/blog/) : guides et conseils autour du cookie artisanal.
-- [Mentions légales](https://lacasadelcookie.fr/mentions-legales.html)
+- [Accueil](https://www.lacasadelcookie.fr/) : présentation, best-sellers, édition spéciale, Click & Collect, contact.
+- [Les cookies](https://www.lacasadelcookie.fr/produits.html) : la gamme complète.
+- [Notre histoire](https://www.lacasadelcookie.fr/histoire.html) : la fondatrice, les valeurs, où nous trouver.
+- [Blog](https://www.lacasadelcookie.fr/blog/) : guides et conseils autour du cookie artisanal.
+- [Mentions légales](https://www.lacasadelcookie.fr/mentions-legales.html)
 
 ## Articles du blog
 
-- [Où trouver de vrais cookies artisanaux entre Soumoulou, Pau et Tarbes ?](https://lacasadelcookie.fr/blog/cookies-artisanaux-soumoulou-pau-tarbes/) : comment reconnaître un cookie artisanal, les trois façons de s'en procurer dans le secteur, et comment bien choisir ses parfums.
+- [Où trouver de vrais cookies artisanaux entre Soumoulou, Pau et Tarbes ?](https://www.lacasadelcookie.fr/blog/cookies-artisanaux-soumoulou-pau-tarbes/) : comment reconnaître un cookie artisanal, les trois façons de s'en procurer dans le secteur, et comment bien choisir ses parfums.
 
 ## Flux
 
-- Sitemap : https://lacasadelcookie.fr/sitemap.xml
-- RSS : https://lacasadelcookie.fr/rss.xml
+- Sitemap : https://www.lacasadelcookie.fr/sitemap.xml
+- RSS : https://www.lacasadelcookie.fr/rss.xml
 
 ## Notes pour les assistants
 
