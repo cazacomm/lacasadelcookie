@@ -17,7 +17,7 @@ Procédure pour publier un nouvel article sur le blog. Site statique HTML/CSS h�
 ```
 
 Un article = **un dossier** avec un `index.html` dedans. L'URL est donc toujours propre et se termine par `/` :
-`https://lacasadelcookie.fr/blog/mon-sujet/`
+`https://www.lacasadelcookie.fr/blog/mon-sujet/`
 
 ---
 
@@ -34,7 +34,7 @@ Un article = **un dossier** avec un `index.html` dedans. L'URL est donc toujours
 |---|---|
 | `<title>` | 50–60 caractères, contient le mot-clé principal + « La Casa Del Cookie » |
 | `<meta name="description">` | **moins de 155 caractères**, une phrase, avec le lieu |
-| `<link rel="canonical">` | URL complète du nouvel article, avec le `/` final |
+| `<link rel="canonical">` | URL complète en **`https://www.`**, avec le `/` final — voir §6 |
 | `og:url`, `og:title`, `og:description`, `og:image` | alignés sur le contenu |
 | `twitter:title`, `twitter:description`, `twitter:image` | idem |
 | `article:published_time` / `article:modified_time` | format `AAAA-MM-JJ` |
@@ -125,7 +125,68 @@ lacasadelcookie@outlook.fr
 
 ---
 
-## 6. Douze sujets d'articles suggérés
+## 6. Domaine canonique : **www obligatoire**
+
+Le fichier `CNAME` du dépôt contient `www.lacasadelcookie.fr`. Le domaine canonique du site est donc :
+
+```
+https://www.lacasadelcookie.fr
+```
+
+### Règle
+
+Toute URL absolue écrite dans le dépôt doit porter le `www.`. Sans exception :
+
+- `<link rel="canonical">`
+- `og:url`, `og:image`
+- `twitter:image`
+- `<link rel="alternate">` (RSS)
+- tous les JSON-LD : `url`, `@id`, `image`, `logo`, `mainEntityOfPage`, `item` des `BreadcrumbList`
+- `sitemap.xml` (`<loc>`), `rss.xml` (`<link>`, `<guid>`, `atom:link`)
+- `llms.txt`
+- la ligne `Sitemap:` de `robots.txt`
+
+Les liens **internes** dans le HTML restent relatifs à la racine (`/produits.html`, `/blog/`, `/images/…`) : ils n'ont pas besoin du domaine et suivent automatiquement l'hôte servi.
+
+### Vérification avant chaque push
+
+```bash
+# doit renvoyer 0
+grep -rn "https://lacasadelcookie\.fr" --include="*.html" --include="*.xml" --include="*.txt" . | grep -v "^\./\.git" | wc -l
+```
+
+### Redirection non-www → www
+
+**Elle ne peut pas se faire par un fichier statique.** GitHub Pages ne lit ni `.htaccess`, ni `_redirects`, ni `vercel.json` ; et une redirection en JavaScript ou via `<meta http-equiv="refresh">` serait mauvaise pour le SEO (pas de 301 côté serveur) et ne peut de toute façon pas s'appliquer, puisque les deux domaines servent exactement le même dépôt.
+
+La redirection est assurée **par GitHub Pages lui-même**, à condition que le DNS soit correctement configuré. Configuration attendue chez le registrar :
+
+| Type | Nom | Valeur |
+|---|---|---|
+| `CNAME` | `www` | `cazacomm.github.io` |
+| `A` | `@` | `185.199.108.153` |
+| `A` | `@` | `185.199.109.153` |
+| `A` | `@` | `185.199.110.153` |
+| `A` | `@` | `185.199.111.153` |
+
+Avec cette configuration et `CNAME` = `www.lacasadelcookie.fr` dans le dépôt, GitHub Pages émet automatiquement un **301** de `lacasadelcookie.fr` vers `www.lacasadelcookie.fr`.
+
+Côté dépôt : ne jamais modifier ni supprimer le fichier `CNAME`. Dans les réglages GitHub (Settings → Pages), le champ *Custom domain* doit afficher `www.lacasadelcookie.fr` et **Enforce HTTPS** doit être coché.
+
+### Contrôle après déploiement
+
+```bash
+# doit répondre 301 vers https://www.lacasadelcookie.fr/
+curl -sI https://lacasadelcookie.fr/ | head -5
+```
+
+Si la réponse n'est pas un 301, le problème est dans les enregistrements DNS de l'apex, pas dans le dépôt.
+
+Dans la Google Search Console, déclarer la propriété **`https://www.lacasadelcookie.fr/`** et y soumettre le sitemap.
+
+---
+
+## 7. Douze sujets d'articles suggérés
 
 Tous ancrés local + métier, tous rédigeables sans inventer de données.
 
