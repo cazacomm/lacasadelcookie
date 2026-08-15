@@ -1,0 +1,76 @@
+{
+  "site_name": "La Casa Del Cookie",
+  "site_url": "https://www.lacasadelcookie.fr",
+  "sector": "cookies artisanaux, pâtisserie artisanale",
+  "location": "Soumoulou, Pyrénées-Atlantiques",
+  "geo_keywords": [
+    "Soumoulou",
+    "Pau",
+    "Tarbes",
+    "Pyrénées-Atlantiques",
+    "Béarn",
+    "Bigorre",
+    "Nay",
+    "Morlaàs",
+    "Ousse",
+    "Pontacq",
+    "Lourdes",
+    "Ibos"
+  ],
+  "tone": "expert-conseil, factuel, chaleureux, sans jargon inutile",
+  "author": "La Casa Del Cookie",
+  "target_word_count": 1300,
+  "faq_questions_count": 5,
+  "language": "fr",
+
+  "site_slug": "lacasadelcookie",
+  "openai_model": "gpt-4o-mini",
+  "openai_temperature": 0.7,
+
+  "template_article": "blog/cookies-artisanaux-soumoulou-pau-tarbes/index.html",
+  "blog_index": "blog/index.html",
+  "workflow_doc": "BLOG_WORKFLOW.md",
+  "sitemap": "sitemap.xml",
+  "rss": "rss.xml",
+
+  "cover_images": [
+    "/images/produit-torrid.jpeg",
+    "/images/produit-crispy.jpeg",
+    "/images/carte-cadeau.jpeg",
+    "/images/pizzacookie.jpeg",
+    "/images/produit-givre.jpeg",
+    "/images/mignardises.jpeg",
+    "/images/produit-bipolaire.jpeg",
+    "/images/cookie-signature.jpeg",
+    "/images/cookie-torrid.jpeg",
+    "/images/produit-avenir.jpeg",
+    "/images/buenocasa.jpeg",
+    "/images/produit-signature.jpeg"
+  ],
+
+  "min_word_count": 950,
+  "max_meta_description_length": 154,
+  "min_h2_count": 3,
+
+  "verified_facts": [
+    "Atelier / laboratoire situé à Soumoulou (64420), entre Pau et Tarbes.",
+    "Délai minimum de 48h à l'avance pour toute commande.",
+    "Retrait au laboratoire sur rendez-vous, aux horaires convenus ensemble.",
+    "Click & Collect réservable en ligne.",
+    "Livraison possible selon la zone du client, à confirmer au cas par cas.",
+    "Certains cookies sont disponibles chez des commerces partenaires autour de Tarbes ; la liste à jour est communiquée sur les réseaux sociaux.",
+    "Fabrication 100 % maison, à la main, en petites séries, sur commande.",
+    "Fondatrice : Fanny.",
+    "Contact : WhatsApp +33 7 82 16 31 79 et lacasadelcookie@outlook.fr.",
+    "Cookies nommés sur le site : Cookie Torrid, Cookie Signature, La Casa x Dubaï, Pizza Cookie, carte cadeau."
+  ],
+
+  "forbidden_content": [
+    "tout prix ou tarif chiffré",
+    "tout chiffre précis non vérifié (nombre de clients, de cookies vendus, de commerces partenaires, années d'expérience)",
+    "tout nom de client ou témoignage",
+    "toute date de fondation ou historique daté",
+    "toute norme, réglementation, obligation légale ou agrément cité comme faisant autorité",
+    "toute adresse de commerce partenaire"
+  ]
+}
