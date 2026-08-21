@@ -15,24 +15,43 @@
     "Ousse",
     "Pontacq",
     "Lourdes",
-    "Ibos"
+    "Ibos",
+    "cookie artisanal",
+    "cookie fait maison",
+    "cookie sur commande",
+    "click and collect",
+    "64420"
   ],
   "tone": "expert-conseil, factuel, chaleureux, sans jargon inutile",
   "author": "La Casa Del Cookie",
   "target_word_count": 1300,
   "faq_questions_count": 5,
   "language": "fr",
-
-  "site_slug": "lacasadelcookie",
-  "openai_model": "gpt-4o-mini",
-  "openai_temperature": 0.7,
-
-  "template_article": "blog/cookies-artisanaux-soumoulou-pau-tarbes/index.html",
-  "blog_index": "blog/index.html",
-  "workflow_doc": "BLOG_WORKFLOW.md",
-  "sitemap": "sitemap.xml",
-  "rss": "rss.xml",
-
+  "model": "gpt-4o",
+  "temperature": 0.7,
+  "topic_marker_prefix": "lacasadelcookie-topic",
+  "og_image": "/images/produit-signature.jpeg",
+  "logo_path": "/images/logo-secondaire.png",
+  "default_article_section": "Cookies artisanaux",
+  "internal_link_targets": [
+    "/produits.html",
+    "/histoire.html",
+    "/index.html#contact"
+  ],
+  "reference_article_slug": "cookies-artisanaux-soumoulou-pau-tarbes",
+  "facts": [
+    "Atelier et laboratoire situés à Soumoulou (64420), Pyrénées-Atlantiques, sur l'axe Pau — Tarbes. Adresse : 9 rue des Mattets.",
+    "Retrait des commandes au laboratoire à Soumoulou, sur rendez-vous et aux horaires convenus ensemble.",
+    "Délai minimum de 48h à l'avance pour toute commande, afin de garantir fraîcheur et gourmandise.",
+    "Click & Collect : le créneau de retrait se réserve en ligne via Calendly.",
+    "Livraison possible selon la zone du client, à confirmer au cas par cas lors de la prise de contact.",
+    "Certains cookies sont disponibles chez des commerces partenaires autour de Tarbes et ses alentours ; la liste à jour est communiquée sur les réseaux sociaux, jamais sur le site.",
+    "Fabrication 100 % maison, à la main, en petites séries, sur commande. Rien n'est congelé ni produit à l'avance en série.",
+    "Fondatrice : Fanny, qui gère les recettes, la production, la livraison et la gestion.",
+    "Contact : WhatsApp au +33 7 82 16 31 79 et e-mail lacasadelcookie@outlook.fr.",
+    "Recettes nommées sur le site : le Cookie Torrid (cacahuètes grillées, pépites de chocolat, caramel beurre salé), le Cookie Signature (noisettes, pépites de chocolat, cœur coulant), La Casa x Dubaï (chocolat au lait, pistache torréfiée, cœur pistache), la Pizza Cookie (format XXL à partager en 8 parts) et la carte cadeau.",
+    "Valeurs revendiquées : gourmandise assumée, artisanat sincère, faire plaisir avant tout."
+  ],
   "cover_images": [
     "/images/produit-torrid.jpeg",
     "/images/produit-crispy.jpeg",
@@ -46,31 +65,5 @@
     "/images/produit-avenir.jpeg",
     "/images/buenocasa.jpeg",
     "/images/produit-signature.jpeg"
-  ],
-
-  "min_word_count": 950,
-  "max_meta_description_length": 154,
-  "min_h2_count": 3,
-
-  "verified_facts": [
-    "Atelier / laboratoire situé à Soumoulou (64420), entre Pau et Tarbes.",
-    "Délai minimum de 48h à l'avance pour toute commande.",
-    "Retrait au laboratoire sur rendez-vous, aux horaires convenus ensemble.",
-    "Click & Collect réservable en ligne.",
-    "Livraison possible selon la zone du client, à confirmer au cas par cas.",
-    "Certains cookies sont disponibles chez des commerces partenaires autour de Tarbes ; la liste à jour est communiquée sur les réseaux sociaux.",
-    "Fabrication 100 % maison, à la main, en petites séries, sur commande.",
-    "Fondatrice : Fanny.",
-    "Contact : WhatsApp +33 7 82 16 31 79 et lacasadelcookie@outlook.fr.",
-    "Cookies nommés sur le site : Cookie Torrid, Cookie Signature, La Casa x Dubaï, Pizza Cookie, carte cadeau."
-  ],
-
-  "forbidden_content": [
-    "tout prix ou tarif chiffré",
-    "tout chiffre précis non vérifié (nombre de clients, de cookies vendus, de commerces partenaires, années d'expérience)",
-    "tout nom de client ou témoignage",
-    "toute date de fondation ou historique daté",
-    "toute norme, réglementation, obligation légale ou agrément cité comme faisant autorité",
-    "toute adresse de commerce partenaire"
   ]
 }
