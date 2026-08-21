@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/</loc>
-    <lastmod>2026-08-14</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -32,6 +32,13 @@
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/cookies-artisanaux-soumoulou-pau-tarbes/</loc>
     <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.lacasadelcookie.fr/blog/cookie-moelleux-cookie-croustillant-comment-choisir/</loc>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

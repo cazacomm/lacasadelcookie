@@ -5,13 +5,22 @@
     <link>https://www.lacasadelcookie.fr/blog/</link>
     <description>Conseils, coulisses et bons plans autour du cookie artisanal à Soumoulou, Pau et Tarbes.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Fri, 14 Aug 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2026 09:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.lacasadelcookie.fr/rss.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://www.lacasadelcookie.fr/images/logo-secondaire.png</url>
       <title>Blog – La Casa Del Cookie</title>
       <link>https://www.lacasadelcookie.fr/blog/</link>
     </image>
+
+    <item>
+      <title>Cookie moelleux ou croustillant : que choisir ?</title>
+      <link>https://www.lacasadelcookie.fr/blog/cookie-moelleux-cookie-croustillant-comment-choisir/</link>
+      <guid isPermaLink="true">https://www.lacasadelcookie.fr/blog/cookie-moelleux-cookie-croustillant-comment-choisir/</guid>
+      <pubDate>Fri, 21 Aug 2026 09:00:00 +0200</pubDate>
+      <category>Cookies artisanaux</category>
+      <description>Découvrez comment choisir entre un cookie moelleux et croustillant avec nos conseils experts à Soumoulou et alentours.</description>
+    </item>
 
     <item>
       <title>Où trouver de vrais cookies artisanaux entre Soumoulou, Pau et Tarbes ?</title>
