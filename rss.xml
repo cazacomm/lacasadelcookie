@@ -5,13 +5,22 @@
     <link>https://www.lacasadelcookie.fr/blog/</link>
     <description>Conseils, coulisses et bons plans autour du cookie artisanal à Soumoulou, Pau et Tarbes.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Mon, 24 Aug 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 09:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.lacasadelcookie.fr/rss.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://www.lacasadelcookie.fr/images/logo-secondaire.png</url>
       <title>Blog – La Casa Del Cookie</title>
       <link>https://www.lacasadelcookie.fr/blog/</link>
     </image>
+
+    <item>
+      <title>Réussir votre pot de départ avec des cookies artisanaux</title>
+      <link>https://www.lacasadelcookie.fr/blog/cookies-pot-depart-bureau-quantites-organisation/</link>
+      <guid isPermaLink="true">https://www.lacasadelcookie.fr/blog/cookies-pot-depart-bureau-quantites-organisation/</guid>
+      <pubDate>Mon, 31 Aug 2026 09:00:00 +0200</pubDate>
+      <category>Cookies artisanaux</category>
+      <description>Découvrez comment organiser un pot de départ réussi avec des cookies artisanaux à Tarbes et Soumoulou.</description>
+    </item>
 
     <item>
       <title>Organisez un anniversaire unique avec des cookies</title>
