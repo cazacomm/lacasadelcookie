@@ -45,6 +45,36 @@ jobs:
           python -m pip install --upgrade pip
           pip install openai
 
+      - name: Identité git
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Réapprovisionnement de la réserve de sujets
+        if: inputs.dry_run != true && inputs.rewrite == ''
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set +e
+          python scripts/generate-article.py --topics-only
+          code=$?
+          set -e
+          if [ $code -ne 0 ]; then
+            echo "::warning::Réapprovisionnement des sujets échoué (code $code) — on continue avec la réserve existante."
+          fi
+
+      - name: Push des nouveaux sujets
+        if: inputs.dry_run != true && inputs.rewrite == ''
+        run: |
+          # Poussé immédiatement : si la rédaction échoue juste après, le lot de
+          # sujets déjà généré est sauvé et ne sera pas reproduit au prochain run.
+          if [ -z "$(git log origin/${GITHUB_REF_NAME}..HEAD --oneline)" ]; then
+            echo "::notice::Aucun nouveau sujet à pousser."
+            exit 0
+          fi
+          git push origin HEAD:${GITHUB_REF_NAME}
+          echo "::notice::Nouveaux sujets poussés."
+
       - name: Génération de l'article
         id: generate
         env:
@@ -76,8 +106,6 @@ jobs:
             echo "::notice::Aucune modification à committer."
             exit 0
           fi
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if [ -n "${{ inputs.rewrite }}" ]; then
             msg="chore(blog): reecriture de ${{ inputs.rewrite }}"
@@ -97,6 +125,8 @@ jobs:
             echo "- Code de sortie du script : \`${{ steps.generate.outputs.exit_code }}\`"
             echo "- Simulation : \`${{ inputs.dry_run || 'false' }}\`"
             echo "- Réécriture : \`${{ inputs.rewrite || '(aucune)' }}\`"
+            echo ""
+            echo "- Sujets en réserve : \`$(grep -c '^| [0-9]' BLOG_WORKFLOW.md) au total dans BLOG_WORKFLOW.md\`"
             echo ""
             echo "Codes : \`0\` succès · \`78\` aucun sujet restant · \`1\` erreur."
           } >> "$GITHUB_STEP_SUMMARY"

@@ -27,10 +27,15 @@ Codes de sortie :
    1  erreur (rien n'a été écrit)
   78  aucun nouveau sujet à traiter (EX_CONFIG — arrêt propre)
 
+Quand la réserve de sujets non traités passe sous TOPIC_RESERVE_MIN, le script
+regénère un lot de sujets et les ajoute à BLOG_WORKFLOW.md avant de rédiger :
+le blog ne tombe plus à court de sujets et ne sort plus en code 78.
+
 Options :
   --dry-run       n'écrit aucun fichier, affiche le résultat
   --mock          n'appelle pas l'API (contenu de démonstration)
   --rewrite SLUG  régénère un article existant et écrase son fichier
+  --topics-only   réapprovisionne la réserve de sujets, sans rédiger d'article
 """
 
 from __future__ import annotations
@@ -40,6 +45,7 @@ import datetime as dt
 import json
 import os
 import re
+import subprocess
 import sys
 import unicodedata
 from pathlib import Path
@@ -67,6 +73,19 @@ PROMPT_MIN_WORDS, PROMPT_MAX_WORDS = 1200, 1500
 # Le modèle rend ~600 mots en première passe et gagne 60 à 75 % à chaque
 # reprise : deux appels plafonnent vers 1000-1100 mots, trois franchissent 1200.
 MAX_CALLS = 3
+
+# Réapprovisionnement automatique de la réserve de sujets.
+#  · TOPIC_RESERVE_MIN : sous ce nombre de sujets NON TRAITÉS, on regénère.
+#    Huit sujets = deux mois de publication hebdomadaire, de quoi absorber
+#    plusieurs échecs de réapprovisionnement d'affilée sans jamais tomber à sec.
+#  · TOPIC_BATCH      : taille du lot demandé (avant déduplication).
+#  · TOPIC_MAX_CALLS  : appels OpenAI maximum pour constituer un lot.
+#  · TOPICS_MODEL     : modèle dédié aux sujets, indépendant de cfg["model"]
+#    qui reste celui de la rédaction des articles.
+TOPIC_RESERVE_MIN = 8
+TOPIC_BATCH = 40
+TOPIC_MAX_CALLS = 2
+TOPICS_MODEL = "gpt-4o"
 
 MONTHS_FR = ["janvier", "février", "mars", "avril", "mai", "juin",
              "juillet", "août", "septembre", "octobre", "novembre", "décembre"]
@@ -276,19 +295,35 @@ def scan_blog(marker_prefix: str) -> tuple[set[int], set[str]]:
     return done_nums, slugs
 
 
+def topic_is_pending(topic: dict, done_nums: set[int], slugs: set[str]) -> bool:
+    """Définition UNIQUE de « sujet non traité ».
+
+    Elle sert à la fois à compter la réserve et à choisir le sujet à rédiger :
+    deux définitions séparées finiraient par diverger, et le réapprovisionnement
+    se déclencherait sur un décompte qui ne correspond pas à ce que le script
+    publie réellement.
+    """
+    if topic["num"] in done_nums:
+        return False
+    # Sujet déclaré publié dans BLOG_WORKFLOW.md avec un slug existant.
+    if topic["declared_slug"] and topic["declared_slug"] in slugs:
+        return False
+    # Le dossier existe déjà : on considère le sujet traité (idempotence).
+    if slugify(topic["title"]) in slugs:
+        return False
+    return True
+
+
+def pending_topics(topics: list[dict], done_nums: set[int],
+                   slugs: set[str]) -> list[dict]:
+    """Sujets restant à traiter, dans l'ordre de la liste."""
+    return [t for t in topics if topic_is_pending(t, done_nums, slugs)]
+
+
 def pick_topic(topics: list[dict], done_nums: set[int], slugs: set[str]) -> dict | None:
     """Premier sujet non traité, dans l'ordre de la liste."""
-    for topic in topics:
-        if topic["num"] in done_nums:
-            continue
-        # Sujet déclaré publié dans BLOG_WORKFLOW.md avec un slug existant.
-        if topic["declared_slug"] and topic["declared_slug"] in slugs:
-            continue
-        slug = slugify(topic["title"])
-        if slug in slugs:
-            # Le dossier existe déjà : on considère le sujet traité (idempotence).
-            continue
-        topic["slug"] = slug
+    for topic in pending_topics(topics, done_nums, slugs):
+        topic["slug"] = slugify(topic["title"])
         return topic
     return None
 
@@ -304,6 +339,286 @@ def load_reference_article(cfg: dict, slugs: set[str]) -> tuple[str, str]:
             return slug, path.read_text(encoding="utf-8")
     raise FileNotFoundError(
         "Aucun article de référence dans /blog/ : impossible de déduire le gabarit.")
+
+
+# ─────────────────────────────────────────────────────────────
+# Réapprovisionnement de la réserve de sujets
+# ─────────────────────────────────────────────────────────────
+
+def clean_line(text: str) -> str:
+    """Normalise une ligne de sujet renvoyée par le modèle.
+
+    Retire puce, numérotation et balisage markdown, et neutralise le caractère
+    « | » qui casserait la ligne du tableau de BLOG_WORKFLOW.md.
+    """
+    out = str(text or "").strip()
+    out = re.sub(r"^\s*[-*•‣]\s*", "", out)          # puce
+    out = re.sub(r"^\s*\d+\s*[.)\]]\s*", "", out)    # numérotation
+    out = out.replace("|", "/")                      # ne doit pas casser le tableau
+    out = re.sub(r"[`*_#\[\]]+", "", out)            # balisage markdown
+    out = re.sub(r"\s+", " ", out)
+    return out.strip(" -—–:;/\t")
+
+
+def dedupe_topics(candidates: list[dict], known_slugs: set[str]) -> list[dict]:
+    """Filtre les doublons.
+
+    La clé de déduplication est le SLUG, jamais le titre : c'est le slug qui
+    porte l'idempotence de tout le pipeline (nom du dossier dans /blog/,
+    résolution de topic_is_pending, refus d'écraser un fichier existant). Deux
+    titres différents qui produisent le même slug sont un doublon effectif, et
+    le second ne serait jamais publiable.
+    """
+    seen = set(known_slugs)
+    out: list[dict] = []
+    for candidate in candidates:
+        if not isinstance(candidate, dict):
+            continue
+        title = clean_line(candidate.get("title"))
+        angle = clean_line(candidate.get("angle")) or "conseil local"
+        if len(title) < 15 or len(title) > 120:
+            continue
+        slug = slugify(title)
+        if not slug or slug in seen:
+            continue
+        seen.add(slug)
+        out.append({"title": title, "angle": angle, "slug": slug})
+    return out
+
+
+def build_topics_prompt(cfg: dict, existing_titles: list[str]) -> tuple[str, str]:
+    """Prompt de génération de sujets, ancré sur sector / location / geo_keywords."""
+    existing = "\n".join(f"- {t}" for t in existing_titles) or "- (aucun)"
+
+    system = f"""Tu es consultant SEO local pour des artisans français.
+Tu proposes des SUJETS d'articles de blog, pas des articles.
+
+Tu réponds UNIQUEMENT par un objet JSON valide, sans bloc de code markdown :
+
+{{
+  "topics": [
+    {{"title": "intitulé du sujet, 40 à 100 caractères",
+      "angle": "type d'angle — « mot-clé visé »"}}
+  ]
+}}
+
+RÈGLES
+- Chaque sujet doit être CONCRET et ACTIONNABLE : une question que se pose
+  vraiment un client, ou une décision qu'il doit prendre. Jamais un thème vague.
+- Ancrage local obligatoire : une bonne moitié des sujets nomme une ville ou une
+  zone de la liste fournie. Les autres restent utiles à un lecteur du secteur.
+- Angle SEO/conseil : le champ « angle » donne le registre (conseil, guide,
+  comparatif, événementiel, saisonnier, coulisses, service, conversion…) suivi
+  du mot-clé visé entre guillemets français.
+- Varie les registres et les moments de l'année. Ne propose pas quinze variantes
+  du même sujet.
+- N'invente aucun produit, aucun service, aucun prix, aucun chiffre : un sujet
+  doit pouvoir être rédigé à partir des seuls faits déjà publiés sur le site.
+- Ne reprends AUCUN des sujets déjà listés ci-dessous, ni une reformulation.
+
+SUJETS DÉJÀ COUVERTS — à ne pas reproposer
+{existing}
+"""
+
+    user = f"""Propose exactement {TOPIC_BATCH} nouveaux sujets d'articles.
+
+Entreprise : {cfg['site_name']} — {cfg['sector']}.
+Zone : {cfg['location']}.
+Ton éditorial du blog : {cfg['tone']}.
+
+Mots-clés géographiques et métier à exploiter :
+{', '.join(cfg['geo_keywords'])}.
+
+Réponds par le seul objet JSON."""
+
+    return system, user
+
+
+def parse_topics_response(payload: dict) -> list[dict]:
+    """Extrait la liste de sujets de la réponse du modèle, quelle que soit la
+    clé employée et que les entrées soient des objets ou de simples chaînes."""
+    if not isinstance(payload, dict):
+        return []
+    raw = None
+    for key in ("topics", "sujets", "items", "results", "list"):
+        if isinstance(payload.get(key), list):
+            raw = payload[key]
+            break
+    if raw is None:
+        # Repli : première valeur qui soit une liste.
+        raw = next((v for v in payload.values() if isinstance(v, list)), [])
+
+    out: list[dict] = []
+    for entry in raw:
+        if isinstance(entry, str):
+            out.append({"title": entry, "angle": ""})
+        elif isinstance(entry, dict):
+            title = entry.get("title") or entry.get("titre") or entry.get("sujet")
+            angle = entry.get("angle") or entry.get("keyword") or entry.get("mot_cle") or ""
+            if title:
+                out.append({"title": title, "angle": angle})
+    return out
+
+
+def mock_topics(cfg: dict, count: int = TOPIC_BATCH) -> list[dict]:
+    """Sujets de démonstration pour --mock : aucun appel API, mais des intitulés
+    tous distincts au slug, afin d'exercer réellement la déduplication."""
+    cities = [c for c in cfg["geo_keywords"] if c[:1].isupper()] or [cfg["location"]]
+    registres = ["conseil", "guide", "comparatif", "événementiel", "saisonnier",
+                 "coulisses", "service", "conversion"]
+    out = []
+    for i in range(count):
+        city = cities[i % len(cities)]
+        registre = registres[i % len(registres)]
+        out.append({
+            "title": f"Sujet de démonstration numéro {i + 1} à {city} : que retenir ?",
+            "angle": f"{registre} — « démonstration {i + 1} »",
+        })
+    return out
+
+
+def generate_topics(cfg: dict, existing_titles: list[str], known_slugs: set[str],
+                    use_mock: bool = False) -> list[dict]:
+    """Constitue un lot de sujets inédits, dans la limite de TOPIC_MAX_CALLS appels."""
+    if use_mock:
+        log("Mode MOCK : sujets de démonstration, aucun appel API.")
+        return dedupe_topics(mock_topics(cfg), known_slugs)
+
+    system, user = build_topics_prompt(cfg, existing_titles)
+    collected: list[dict] = []
+    seen = set(known_slugs)
+
+    for attempt in range(1, TOPIC_MAX_CALLS + 1):
+        followup = None
+        if collected:
+            already = "\n".join(f"- {t['title']}" for t in collected)
+            followup = [{
+                "role": "user",
+                "content": (f"Tu as déjà proposé ces {len(collected)} sujets :\n{already}\n"
+                            f"Il en manque {TOPIC_BATCH - len(collected)}. Propose "
+                            "uniquement des sujets SUPPLÉMENTAIRES, sans reprendre les "
+                            "précédents. Réponds par le seul objet JSON."),
+            }]
+        log(f"Génération de sujets — appel {attempt}/{TOPIC_MAX_CALLS}.")
+        try:
+            payload = generate_content(cfg, system, user, followup=followup,
+                                       model=TOPICS_MODEL)
+        except (ValueError, json.JSONDecodeError) as exc:
+            fail(f"Appel de sujets n°{attempt} inexploitable : {exc}")
+            break
+
+        fresh = dedupe_topics(parse_topics_response(payload), seen)
+        seen.update(t["slug"] for t in fresh)
+        collected.extend(fresh)
+        log(f"  {len(fresh)} sujets inédits retenus "
+            f"(total {len(collected)}/{TOPIC_BATCH}).")
+        if len(collected) >= TOPIC_BATCH:
+            break
+
+    return collected[:TOPIC_BATCH]
+
+
+def append_topics_to_workflow(workflow: str, new_topics: list[dict]) -> tuple[str, int]:
+    """Ajoute les sujets à la fin du tableau de BLOG_WORKFLOW.md.
+
+    Le format est relu sur place, jamais supposé : on repère la dernière ligne
+    de données du tableau et on poursuit la numérotation. Le slug n'est PAS
+    écrit — il est déduit du titre par slugify(), exactement comme pour les
+    sujets déjà présents.
+    """
+    m = re.search(r"^##\s+\d+\.\s+.*sujets d'articles suggérés.*$",
+                  workflow, flags=re.M | re.I)
+    if not m:
+        raise ValueError("Section des sujets suggérés introuvable dans BLOG_WORKFLOW.md")
+
+    sec_start = m.end()
+    nxt = re.search(r"^##\s", workflow[sec_start:], flags=re.M)
+    sec_end = sec_start + (nxt.start() if nxt else len(workflow) - sec_start)
+    block = workflow[sec_start:sec_end]
+
+    rows = list(re.finditer(r"^\|\s*(\d+)\s*\|.*\|\s*$", block, flags=re.M))
+    if not rows:
+        raise ValueError("Tableau des sujets introuvable dans BLOG_WORKFLOW.md")
+
+    last_end = rows[-1].end()
+    next_num = max(int(r.group(1)) for r in rows) + 1
+
+    lines = "\n".join(f"| {next_num + i} | {t['title']} | {t['angle']} |"
+                      for i, t in enumerate(new_topics))
+    new_block = block[:last_end] + "\n" + lines + block[last_end:]
+    return workflow[:sec_start] + new_block + workflow[sec_end:], next_num
+
+
+def git_commit_file(path: Path, message: str) -> bool:
+    """Commit d'un SEUL fichier. Retourne False si rien n'a changé.
+
+    Isoler ce commit permet au workflow de pousser les sujets avant de tenter la
+    rédaction : si l'article échoue ensuite, le lot de sujets est déjà sauvé.
+    """
+    rel = str(path.relative_to(ROOT))
+    subprocess.run(["git", "add", "--", rel], cwd=ROOT, check=True,
+                   capture_output=True, text=True)
+    staged = subprocess.run(["git", "diff", "--cached", "--quiet", "--", rel], cwd=ROOT)
+    if staged.returncode == 0:
+        log(f"Rien à committer pour {rel}.")
+        return False
+    subprocess.run(["git", "commit", "-m", message, "--", rel], cwd=ROOT, check=True,
+                   capture_output=True, text=True)
+    log(f"Commit : {message}")
+    return True
+
+
+def replenish_topics(cfg: dict, topics: list[dict], done_nums: set[int],
+                     slugs: set[str], *, use_mock: bool = False,
+                     dry_run: bool = False, do_commit: bool = True) -> tuple[str | None, int]:
+    """Regénère la réserve si elle passe sous TOPIC_RESERVE_MIN.
+
+    Retourne (contenu rechargé de BLOG_WORKFLOW.md ou None, nombre de sujets
+    ajoutés). Le contenu est renvoyé pour que l'appelant reparse la liste sans
+    relire le disque.
+    """
+    pending = pending_topics(topics, done_nums, slugs)
+    log(f"Réserve de sujets non traités : {len(pending)} "
+        f"(seuil de réapprovisionnement : {TOPIC_RESERVE_MIN}).")
+    if len(pending) >= TOPIC_RESERVE_MIN:
+        log("Réserve suffisante — aucune génération de sujets.")
+        return None, 0
+
+    log(f"Réserve basse — génération d'un lot de {TOPIC_BATCH} sujets.")
+    existing_titles = [t["title"] for t in topics]
+    known_slugs = {slugify(t["title"]) for t in topics} | set(slugs)
+
+    fresh = generate_topics(cfg, existing_titles, known_slugs, use_mock=use_mock)
+    if not fresh:
+        fail("Aucun sujet inédit obtenu — la réserve existante reste en place.")
+        return None, 0
+
+    workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
+    updated, first_num = append_topics_to_workflow(workflow, fresh)
+
+    if dry_run:
+        log(f"DRY-RUN : {len(fresh)} sujets seraient ajoutés à partir du "
+            f"n°{first_num} — BLOG_WORKFLOW.md non modifié.")
+        for t in fresh[:5]:
+            log(f"    · {t['title']}")
+        if len(fresh) > 5:
+            log(f"    … et {len(fresh) - 5} autres.")
+        return None, 0
+
+    WORKFLOW_PATH.write_text(updated, encoding="utf-8")
+    log(f"BLOG_WORKFLOW.md : {len(fresh)} sujets ajoutés "
+        f"(n°{first_num} à n°{first_num + len(fresh) - 1}).")
+
+    if do_commit:
+        try:
+            git_commit_file(WORKFLOW_PATH,
+                            f"chore(blog): {len(fresh)} nouveaux sujets")
+        except (subprocess.CalledProcessError, OSError) as exc:
+            # Le fichier est écrit : le commit échoué n'annule pas le travail,
+            # il sera repris par le `git add -A` de l'étape de publication.
+            fail(f"Commit des sujets impossible ({exc}) — fichier écrit malgré tout.")
+
+    return updated, len(fresh)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -437,7 +752,10 @@ Réponds par le seul objet JSON."""
 
 
 def generate_content(cfg: dict, system: str, user: str,
-                     followup: list[dict] | None = None) -> dict:
+                     followup: list[dict] | None = None,
+                     model: str | None = None) -> dict:
+    """`model` permet à la génération de sujets d'utiliser son propre modèle sans
+    toucher à cfg["model"], qui reste celui de la rédaction des articles."""
     try:
         from openai import OpenAI
     except ImportError as exc:
@@ -448,9 +766,10 @@ def generate_content(cfg: dict, system: str, user: str,
         raise RuntimeError("Variable d'environnement OPENAI_API_KEY absente.")
 
     client = OpenAI()
-    log(f"Appel OpenAI (modèle {cfg['model']}, temperature {cfg['temperature']})…")
+    use_model = model or cfg["model"]
+    log(f"Appel OpenAI (modèle {use_model}, temperature {cfg['temperature']})…")
     response = client.chat.completions.create(
-        model=cfg["model"],
+        model=use_model,
         temperature=cfg["temperature"],
         max_tokens=9000,
         response_format={"type": "json_object"},
@@ -1125,7 +1444,14 @@ def main() -> int:
                         help="n'appelle pas l'API OpenAI (contenu de démonstration)")
     parser.add_argument("--rewrite", metavar="SLUG",
                         help="réécrit un article existant et écrase son fichier")
+    parser.add_argument("--topics-only", action="store_true",
+                        help="réapprovisionne la réserve de sujets, sans rédiger d'article")
     args = parser.parse_args()
+
+    if args.topics_only and args.rewrite:
+        fail("--topics-only et --rewrite sont incompatibles : le premier ne "
+             "rédige aucun article, le second en réécrit un.")
+        return EXIT_ERROR
 
     if args.dry_run:
         log("Mode DRY-RUN : aucun fichier ne sera écrit.")
@@ -1148,6 +1474,22 @@ def main() -> int:
         done, slugs = scan_blog(cfg["topic_marker_prefix"])
         log(f"Articles déjà en ligne : {len(slugs)} — sujets marqués traités : "
             f"{sorted(done) if done else 'aucun'}")
+
+        # ── Réapprovisionnement de la réserve de sujets ──
+        # Ni en réécriture (le sujet est déjà connu), ni quand la réserve suffit.
+        if not args.rewrite:
+            refreshed, added = replenish_topics(
+                cfg, topics, done, slugs,
+                use_mock=args.mock, dry_run=args.dry_run,
+                do_commit=not args.dry_run)
+            if refreshed is not None and added:
+                topics = parse_topics(refreshed)
+                log(f"{len(topics)} sujets désormais listés dans BLOG_WORKFLOW.md.")
+
+        if args.topics_only:
+            restant = len(pending_topics(topics, done, slugs))
+            log(f"Mode SUJETS SEULS : terminé — {restant} sujets en réserve.")
+            return EXIT_OK
 
         if args.rewrite:
             # Réécriture : on retrouve le sujet par le marqueur du fichier existant.

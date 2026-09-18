@@ -7,8 +7,8 @@ Publication automatique d'un article par semaine, sans intervention humaine.
 | **Quand** | Tous les lundis à 09:00 UTC (11h en France l'été, 10h l'hiver) |
 | **Quoi** | 1 article complet + carte sur `/blog/`, `sitemap.xml`, `rss.xml`, `llms.txt` |
 | **Où** | Workflow `.github/workflows/blog-auto.yml` |
-| **Sujets** | Tableau « Douze sujets d'articles suggérés » de `BLOG_WORKFLOW.md`, dans l'ordre |
-| **Modèle** | `gpt-4o`, température 0.7, 3 appels maximum par article |
+| **Sujets** | Tableau « Sujets d'articles suggérés » de `BLOG_WORKFLOW.md`, dans l'ordre — réserve regarnie automatiquement |
+| **Modèle** | `gpt-4o`, température 0.7, 3 appels maximum par article (+ 2 pour les sujets) |
 | **Volume** | 1200 à 1500 mots de corps, FAQ exclue |
 
 ---
@@ -62,6 +62,7 @@ python3 scripts/generate-article.py --dry-run          # test, n'écrit rien
 python3 scripts/generate-article.py --dry-run --mock   # test sans appel API
 python3 scripts/generate-article.py                    # écrit les fichiers
 python3 scripts/generate-article.py --rewrite mon-slug # régénère un article
+python3 scripts/generate-article.py --topics-only      # regarnit la réserve seule
 ```
 
 `--mock` fabrique un contenu de démonstration au format attendu : c'est le moyen
@@ -127,7 +128,62 @@ aucun horaire ni adresse en dehors de la liste `facts`.
 
 ---
 
-## 7. Idempotence
+## 7. La réserve de sujets se regarnit seule
+
+Avant, quand tous les sujets de `BLOG_WORKFLOW.md` étaient publiés, le script
+sortait en code `78` et le blog s'arrêtait. Il se réapprovisionne désormais.
+
+**Déclenchement.** À chaque exécution, le script compte les sujets **non
+traités**. S'il en reste moins de `TOPIC_RESERVE_MIN` (8), il demande à `gpt-4o`
+un lot de `TOPIC_BATCH` (40) nouveaux sujets, en deux appels maximum
+(`TOPIC_MAX_CALLS`). Huit sujets, c'est deux mois de publication hebdomadaire :
+la marge absorbe plusieurs réapprovisionnements ratés d'affilée.
+
+**Ce qui est envoyé au modèle** : `sector`, `location`, `geo_keywords` et `tone`
+de `blog-config.json`, plus **la liste de tous les sujets déjà listés**, pour
+qu'il ne les repropose pas. Consigne : des sujets concrets, actionnables,
+ancrés localement, avec un angle SEO/conseil et un mot-clé visé.
+
+**Déduplication sur le slug, jamais sur le titre.** Le slug est la clé
+d'idempotence de tout le pipeline — nom du dossier dans `/blog/`, résolution du
+sujet suivant, refus d'écraser un fichier. Deux titres différents qui produisent
+le même slug sont un doublon effectif : le second ne serait jamais publiable.
+`clean_line()` normalise au passage puces, numérotation, balisage markdown et
+neutralise le `|` qui casserait la ligne du tableau.
+
+**Écriture.** `append_topics_to_workflow()` relit le format du tableau sur place
+plutôt que de le supposer, repère la dernière ligne de données et poursuit la
+numérotation. Le slug n'est **pas** écrit dans le tableau : il est déduit du
+titre par `slugify()`, exactement comme pour les sujets d'origine.
+
+**Un seul point de vérité.** `topic_is_pending()` définit ce qu'est un « sujet
+non traité », et sert à la fois à compter la réserve et à choisir le sujet à
+rédiger. Deux définitions séparées auraient fini par diverger, et le
+réapprovisionnement se serait déclenché sur un décompte ne correspondant pas à
+ce que le script publie.
+
+### Les sujets sont poussés avant la rédaction
+
+Dans le workflow, le réapprovisionnement est une étape **séparée et antérieure**
+à la rédaction :
+
+1. **Identité git** — sans elle le commit des sujets échouerait.
+2. **Réapprovisionnement** — `--topics-only`, ignoré si `dry_run` ou `rewrite`.
+3. **Push des nouveaux sujets** — poussé seulement si `origin/<branche>..HEAD`
+   n'est pas vide.
+4. Rédaction de l'article, puis commit et push de l'article.
+
+Si la rédaction échoue à l'étape 4, **le lot de sujets est déjà sur le remote** :
+rien n'est perdu et il ne sera pas regénéré au prochain run. Un échec du
+réapprovisionnement passe en `::warning::` et le job continue avec la réserve
+existante — il ne bloque jamais la publication.
+
+`--topics-only` et `--rewrite` sont incompatibles : le premier ne rédige aucun
+article, le second en réécrit un. Le script refuse la combinaison.
+
+---
+
+## 8. Idempotence
 
 Chaque article généré porte un marqueur `<!-- lacasadelcookie-topic: N -->` dans
 son `<body>`. Un sujet déjà marqué n'est jamais retraité. Si le dossier du slug
@@ -143,7 +199,7 @@ sont idempotentes par URL : rejouer le workflow ne crée jamais de doublon.
 
 ---
 
-## 8. Le gabarit
+## 9. Le gabarit
 
 `split_template()` relit l'article de référence à chaque exécution et en extrait
 les morceaux réutilisables. Il est **adapté aux conventions HTML de ce site**,
@@ -165,7 +221,7 @@ toujours.
 
 ---
 
-## 9. Coût estimé
+## 10. Coût estimé
 
 Tarifs OpenAI `gpt-4o` au moment de la mise en place : **2,50 $ / M tokens en
 entrée**, **10,00 $ / M tokens en sortie**.
@@ -186,16 +242,23 @@ Les minutes GitHub Actions sont gratuites sur un dépôt public.
 
 ---
 
-## 10. Quand les 12 sujets seront épuisés
+## 11. Quand la réserve s'épuise
 
-Le workflow sortira en code `78` chaque lundi, sans rien publier ni échouer.
-Pour relancer la production, ajouter des lignes au tableau
-« Douze sujets d'articles suggérés » de `BLOG_WORKFLOW.md` en continuant la
-numérotation (13, 14, …). Aucune modification du script n'est nécessaire.
+Elle ne s'épuise plus toute seule : voir §7, le script regarnit avant d'atteindre
+le fond. Le code `78` ne survient donc plus que si le réapprovisionnement échoue
+plusieurs fois de suite **et** que la réserve tombe à zéro — le job reste vert,
+rien n'est publié ce jour-là.
+
+Pour reprendre la main, deux options :
+
+- forcer un lot : `python3 scripts/generate-article.py --topics-only` ;
+- ou ajouter des lignes à la main au tableau « Sujets d'articles suggérés » de
+  `BLOG_WORKFLOW.md`, en continuant la numérotation. Aucune modification du
+  script n'est nécessaire.
 
 ---
 
-## 11. Après une publication automatique
+## 12. Après une publication automatique
 
 - Ouvrir l'article en navigation privée.
 - Tester le JSON-LD : <https://search.google.com/test/rich-results>

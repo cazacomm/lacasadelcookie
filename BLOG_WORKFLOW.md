@@ -186,7 +186,7 @@ Dans la Google Search Console, déclarer la propriété **`https://www.lacasadel
 
 ---
 
-## 7. Douze sujets d'articles suggérés
+## 7. Sujets d'articles suggérés
 
 Tous ancrés local + métier, tous rédigeables sans inventer de données.
 
