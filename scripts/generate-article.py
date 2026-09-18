@@ -1478,13 +1478,22 @@ def main() -> int:
         # ── Réapprovisionnement de la réserve de sujets ──
         # Ni en réécriture (le sujet est déjà connu), ni quand la réserve suffit.
         if not args.rewrite:
-            refreshed, added = replenish_topics(
-                cfg, topics, done, slugs,
-                use_mock=args.mock, dry_run=args.dry_run,
-                do_commit=not args.dry_run)
-            if refreshed is not None and added:
-                topics = parse_topics(refreshed)
-                log(f"{len(topics)} sujets désormais listés dans BLOG_WORKFLOW.md.")
+            try:
+                refreshed, added = replenish_topics(
+                    cfg, topics, done, slugs,
+                    use_mock=args.mock, dry_run=args.dry_run,
+                    do_commit=not args.dry_run)
+                if refreshed is not None and added:
+                    topics = parse_topics(refreshed)
+                    log(f"{len(topics)} sujets désormais listés dans BLOG_WORKFLOW.md.")
+            except Exception as exc:                  # noqa: BLE001
+                # Le réapprovisionnement ne doit JAMAIS empêcher de publier :
+                # on continue avec la réserve existante. En --topics-only, en
+                # revanche, l'échec est le résultat de l'exécution : il remonte.
+                if args.topics_only:
+                    raise
+                fail(f"Réapprovisionnement des sujets échoué ({type(exc).__name__} : "
+                     f"{exc}) — on continue avec la réserve existante.")
 
         if args.topics_only:
             restant = len(pending_topics(topics, done, slugs))
