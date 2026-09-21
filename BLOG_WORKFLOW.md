@@ -205,4 +205,44 @@ Tous ancrés local + métier, tous rédigeables sans inventer de données.
 | 11 | Le format XXL à partager : quand choisir une pizza cookie | produit — « cookie géant à partager » |
 | 12 | Cookies pour un mariage ou une réception dans les Pyrénées-Atlantiques | événementiel — « cookies mariage 64 » |
 
+| 13 | Comment se passe la livraison de cookies à Pau ? | service — « livraison de cookies Pau » |
+| 14 | Les meilleures occasions pour offrir des cookies à Tarbes | événementiel — « offrir cookies Tarbes » |
+| 15 | Comment choisir entre différents parfums de cookies à Soumoulou | guide — « parfums cookies Soumoulou » |
+| 16 | Qu'est-ce qu'un cookie artisanal et pourquoi le choisir ? | conseil — « cookie artisanal » |
+| 17 | Organiser un goûter d'entreprise à Pau avec des cookies | événementiel — « goûter entreprise Pau » |
+| 18 | Commander des cookies pour une réception à Lourdes | service — « commander cookies Lourdes » |
+| 19 | Les tendances de cookies pour les fêtes de fin d'année | saisonnier — « cookies fêtes fin d'année » |
+| 20 | Comment conserver des cookies faits maison plus longtemps | conseil — « conserver cookies maison » |
+| 21 | Découvrir les ingrédients d'un cookie artisanal | coulisses — « ingrédients cookie artisanal » |
+| 22 | Les avantages du click and collect pour vos cookies à Soumoulou | service — « click and collect Soumoulou » |
+| 23 | Offrir des cookies pour la Saint-Valentin à Tarbes | saisonner — « offrir cookies Saint-Valentin Tarbes » |
+| 24 | Quel cookie pour quel moment de la journée ? | guide — « cookie moment journée » |
+| 25 | Les cookies faits maison : une idée cadeau pour les fêtes | saisonnier — « cookies maison cadeau fêtes » |
+| 26 | Différences entre un cookie fait maison et industriel | comparatif — « cookie maison vs industriel » |
+| 27 | Comment fabriquer un cookie sur mesure pour vos événements | service — « cookie sur mesure événement » |
+| 28 | Les cookies préférés des habitants de Morlaàs | local — « cookies préférés Morlaàs » |
+| 29 | Pourquoi choisir un cookie artisanal pour un goûter d'enfant | conseil — « cookie artisanal goûter enfant » |
+| 30 | L'importance de la fraîcheur dans un cookie artisanal | conseil — « fraîcheur cookie artisanal » |
+| 31 | Les cookies au chocolat les plus populaires à Nay | local — « cookies chocolat Nay » |
+| 32 | Nos engagements pour des cookies éthiques et responsables | coulisses — « cookies éthiques responsables » |
+| 33 | Comment préparer un panier de cookies pour une fête à Ibos | guide — « panier cookies fête Ibos » |
+| 34 | Le rôle des ingrédients locaux dans nos cookies artisanaux | coulisses — « ingrédients locaux cookies » |
+| 35 | Idées de personnalisation pour vos cookies sur commande | conseil — « personnalisation cookies sur commande » |
+| 36 | Comment choisir la bonne taille de cookie pour votre événement | guide — « taille cookie événement » |
+| 37 | Les cookies vegan à découvrir à Pontacq | local — « cookies vegan Pontacq » |
+| 38 | Le secret de nos cookies moelleux à Ousse | coulisses — « cookies moelleux Ousse » |
+| 39 | Pourquoi un cookie artisanal est le cadeau parfait à Lourdes | conseil — « cookie artisanal cadeau Lourdes » |
+| 40 | Les tendances actuelles du cookie artisanal | tendance — « tendances cookie artisanal » |
+| 41 | Choisir un cookie sans gluten : options et conseils | conseil — « cookie sans gluten » |
+| 42 | Comment organiser une dégustation de cookies à Pau | événementiel — « dégustation cookies Pau » |
+| 43 | Les cookies à offrir pour un baptême à Nay | événementiel — « cookies baptême Nay » |
+| 44 | Personnaliser vos cookies pour un mariage à Tarbes | service — « personnalisation cookies mariage Tarbes » |
+| 45 | Les meilleures recettes de cookies maison à tester | guide — « recettes cookies maison » |
+| 46 | Les raisons d'offrir des cookies pour un pot de départ à Pau | événementiel — « cookies pot départ Pau » |
+| 47 | Créer une boîte de cookies assortis pour un cadeau personnalisé | conseil — « boîte cookies cadeau personnalisé » |
+| 48 | Les cookies préférés des entreprises à Tarbes | local — « cookies entreprises Tarbes » |
+| 49 | Le processus de création d'un cookie sur commande | coulisses — « création cookie sur commande » |
+| 50 | Les cookies originaux à découvrir dans le Béarn | local — « cookies originaux Béarn » |
+| 51 | Pourquoi faire appel à un artisan pour vos cookies de Noël | saisonner — « artisan cookies Noël » |
+| 52 | Les cookies gourmands pour vos événements à Lourdes | service — « cookies événements Lourdes » |
 **Rythme conseillé** : 1 à 2 articles par mois. Mieux vaut un article solide et local par mois que quatre articles génériques.
