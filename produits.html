@@ -90,6 +90,7 @@
     .product-meta{display:flex;justify-content:space-between;align-items:center;font-size:0.9rem;margin-top:0.2rem}
     .product-price{font-weight:600}
     .product-note{font-size:0.8rem;color:var(--color-muted)}
+    .desc-toggle{display:none}
     .product-meta{gap:0.6rem}
 @media (max-width:767px){.product-meta{flex-wrap:wrap}.product-cc{width:100%;justify-content:flex-start}}
 
@@ -120,6 +121,11 @@
       .product-meta{font-size:0.78rem;flex-direction:column;align-items:flex-start;gap:0.25rem;margin-top:auto}
       .product-body{flex:1}
       .tag-extra{display:none}
+      .products-grid .product-card:not(.product-card--wide) .product-desc{display:none}
+      .products-grid .product-card.is-open .product-desc{display:block}
+      .desc-toggle{display:inline-flex;align-items:center;gap:0.3rem;align-self:flex-start;padding:0.15rem 0;font-size:0.74rem;color:var(--color-primary-dark);font-weight:500}
+      .desc-toggle svg{width:12px;height:12px;transition:transform .2s ease}
+      .product-card.is-open .desc-toggle svg{transform:rotate(180deg)}
       .product-card--wide .product-image{min-height:240px}
       .product-card--wide .product-body{padding:1.1rem 1.2rem 1.3rem}
       .product-card--wide .product-title{font-size:1rem}
@@ -464,6 +470,30 @@
           e.preventDefault();
           target.scrollIntoView({behavior:'smooth',block:'start'});
         }
+      });
+    });
+
+    // Mobile : description repliée, la flèche ouvre les deux cookies de la même ligne
+    document.querySelectorAll('.products-grid').forEach(grid=>{
+      const cards=[...grid.querySelectorAll('.product-card:not(.product-card--wide)')];
+      cards.forEach((card,i)=>{
+        const title=card.querySelector('.product-title');
+        if(!title)return;
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.className='desc-toggle';
+        btn.setAttribute('aria-expanded','false');
+        btn.innerHTML='<span>Description</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        title.insertAdjacentElement('afterend',btn);
+        btn.addEventListener('click',()=>{
+          const row=[cards[i-(i%2)],cards[i-(i%2)+1]].filter(Boolean);
+          const open=!card.classList.contains('is-open');
+          row.forEach(c=>{
+            c.classList.toggle('is-open',open);
+            const b=c.querySelector('.desc-toggle');
+            if(b)b.setAttribute('aria-expanded',String(open));
+          });
+        });
       });
     });
 
