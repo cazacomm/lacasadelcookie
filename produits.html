@@ -93,6 +93,20 @@
     .product-meta{gap:0.6rem}
 @media (max-width:767px){.product-meta{flex-wrap:wrap}.product-cc{width:100%;justify-content:flex-start}}
 
+    .range-header{display:flex;align-items:baseline;gap:1rem;margin:0 0 1.4rem;padding-bottom:0.8rem;border-bottom:2px solid var(--color-secondary)}
+    .range-header + .products-grid{margin-bottom:3.2rem}
+    .range-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1.2}
+    .range-sub{font-size:0.9rem;color:var(--color-muted)}
+    .product-card--wide{grid-column:1/-1}
+    .product-card--wide .product-image{padding-top:0;min-height:300px;background-position:center 60%}
+    .protein-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--color-text)}
+    .protein-variants{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin:0.4rem 0}
+    .protein-variants li{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:0.65rem 1rem;background:var(--color-secondary);border-radius:12px;font-size:0.95rem}
+    .protein-variants li strong{font-weight:600}
+    .protein-variants li span{font-weight:600;color:var(--color-primary-dark);white-space:nowrap}
+    @media (min-width:768px){.product-card--wide{flex-direction:row}.product-card--wide .product-image{flex:0 0 42%;min-height:380px}.product-card--wide .product-body{flex:1;justify-content:center;padding:2rem 2.2rem}}
+    @media (max-width:767px){.range-header{flex-direction:column;gap:0.2rem}.range-title{font-size:1.4rem}}
+
     .contact-band{background:linear-gradient(120deg,#000,#3b2416);color:#fff;border-radius:var(--radius-lg);padding:1.8rem 1.5rem;display:grid;gap:1.2rem;align-items:center;box-shadow:var(--shadow-soft);margin-top:3rem}
     .contact-band-title{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.3rem}
     .contact-band-text{font-size:0.9rem;opacity:0.9}
@@ -134,6 +148,8 @@
       .footer-top,.footer-bottom{flex-direction:column;align-items:center;text-align:center}
     }
   </style>
+  <!-- Thème Halloween (se désactive tout seul après le 1er novembre) -->
+  <link rel="stylesheet" href="halloween.css">
 </head>
 <body>
 <header>
@@ -169,7 +185,27 @@
         <h1 class="section-title">Les cookies de La Casa</h1>
       </div>
 
+      <div class="range-header">
+        <h2 class="range-title">Les cookies classiques</h2>
+        <p class="range-sub">Les recettes de la maison, généreuses et gourmandes.</p>
+      </div>
+
       <div class="products-grid">
+        <article class="product-card">
+          <div class="product-image" style="background-image:url('images/halloween-2.jpeg');">
+            <span class="product-tag">🎃 Halloween · Édition limitée</span>
+            <span class="product-logo" aria-hidden="true"> <img src="images/logo-secondaire.png" alt=""> </span>
+          </div>
+          <div class="product-body">
+            <h2 class="product-title">Le Cookie Araignée</h2>
+            <p class="product-desc">L’édition Halloween : noisettes torréfiées, pépites de chocolat et une araignée en chocolat posée dessus… Mamie a déjà grimpé sur la chaise.</p>
+            <div class="product-meta">
+              <span class="product-price">4,00 € l’unité</span>
+              <a class="product-cc" href="https://calendly.com/lacasadelcookie/click-collect" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
+            </div>
+          </div>
+        </article>
+
         <article class="product-card">
           <div class="product-image" style="background-image:url('images/produit-torrid.jpeg');">
             <span class="product-tag">Best-seller</span>
@@ -308,11 +344,38 @@
 
       </div>
 
+      <div class="range-header">
+        <h2 class="range-title">Les cookies protéinés</h2>
+        <p class="range-sub">Sans beurre, moins de sucres, plus de protéines.</p>
+      </div>
+
+      <div class="products-grid">
+        <article class="product-card product-card--wide">
+          <div class="product-image" style="background-image:url('images/proteine-noisette.jpeg');">
+            <span class="product-tag">Nouveau · Protéiné</span>
+            <span class="product-logo" aria-hidden="true"> <img src="images/logo-secondaire.png" alt=""> </span>
+          </div>
+          <div class="product-body">
+            <h2 class="product-title">Les Cookies Protéinés</h2>
+            <p class="protein-quote">« Un max de gourmandise, des protéines en plus, sans beurre et moins de sucres ! »</p>
+            <p class="product-desc">Deux parfums au choix :</p>
+            <ul class="protein-variants">
+              <li><strong>Le Cacahuète</strong> <span>16 g de protéines</span></li>
+              <li><strong>Le Noisette</strong> <span>14 g de protéines</span></li>
+            </ul>
+            <div class="product-meta">
+              <span class="product-price">4,00 € l’unité · gamme protéinée</span>
+              <a class="product-cc" href="https://calendly.com/lacasadelcookie/click-collect" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
       <section class="section" id="commander" aria-labelledby="order-title">
         <div class="contact-band">
           <div>
             <h2 class="contact-band-title" id="order-title">Comment commander vos cookies ?</h2>
-            <p class="contact-band-text">Les cookies sont préparés sur commande, avec un délai minimum de 48h à l’avance, afin de garantir fraîcheur et gourmandise. Le retrait est possible au laboratoire à Soumoulou, ou une livraison peut être proposée selon votre zone. Certains cookies sont également disponibles chez nos commerces partenaires : la liste est communiquée sur les réseaux sociaux.</p>
+            <p class="contact-band-text">Les cookies sont préparés sur commande, avec un délai minimum de 48h à l’avance, afin de garantir fraîcheur et gourmandise. Le retrait est possible au laboratoire à Soumoulou, ou une livraison peut être proposée selon votre zone. Retrouvez-moi aussi le jeudi matin sous les halles Marcadieu à Tarbes et le samedi matin au marché de Bagnères-de-Bigorre. Certains cookies sont également disponibles chez nos commerces partenaires : la liste est communiquée sur les réseaux sociaux.</p>
           </div>
           <div class="contact-band-actions">
             <a class="btn-wa" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20passer%20commande%20de%20cookies%2C%0AMerci%20par%20avance" target="_blank" rel="noreferrer">
@@ -388,5 +451,6 @@
     if(yearSpan){yearSpan.textContent=new Date().getFullYear();}
   })();
 </script>
+<script src="halloween.js" defer></script>
 </body>
 </html>

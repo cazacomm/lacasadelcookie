@@ -1,0 +1,94 @@
+/* ==========================================================================
+   La Casa Del Cookie — Thème Halloween
+   Activé par halloween.js (classe .halloween sur <html>) jusqu'au 1er novembre.
+   Toutes les décorations sont en pointer-events:none : rien ne bloque le site.
+   ========================================================================== */
+
+html.halloween{--color-primary:#E8701A;--color-primary-dark:#B4520C;--color-secondary:#FCEBDD}
+html.halloween body{background:#FFFAF4}
+html.halloween header{border-bottom:none}
+html.halloween header::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;background:linear-gradient(90deg,#E8701A,#6B2E8C,#E8701A);opacity:.85}
+html.halloween .section-kicker{color:#B4520C}
+
+/* --- Bandeau d'annonce ------------------------------------------------------ */
+.hw-banner{display:block;position:relative;z-index:45;background:#1C130E;color:#F6E6D6;text-align:center;font-size:0.85rem;padding:0.55rem 1rem;letter-spacing:0.01em}
+.hw-banner strong{color:#F28C28;font-weight:600}
+.hw-banner span{text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(242,140,40,.6);white-space:nowrap}
+
+/* --- Calque de décorations (sous le header) --------------------------------- */
+.hw-layer{position:fixed;left:0;right:0;top:var(--header-height,72px);bottom:0;z-index:40;pointer-events:none;overflow:hidden}
+.hw-layer *{pointer-events:none}
+
+/* Toiles d'araignée dans les coins */
+.hw-web{position:absolute;top:0;width:150px;height:150px;opacity:.55}
+.hw-web--l{left:0}
+.hw-web--r{right:0;transform:scaleX(-1)}
+
+/* Araignées suspendues à leur fil */
+.hw-spider{position:absolute;top:0;width:var(--size,46px);transform:translateY(-140%);animation:hwDrop 2.6s cubic-bezier(.25,1.35,.45,1) var(--delay,0s) forwards}
+.hw-spider-inner{position:relative;animation:hwBob 4.5s ease-in-out calc(var(--delay,0s) + 2.6s) infinite;transform-origin:50% 0}
+.hw-spider-inner::before{content:"";position:absolute;left:50%;bottom:78%;width:1px;height:100vh;margin-left:-.5px;background:linear-gradient(to bottom,rgba(70,58,50,.15),rgba(70,58,50,.6))}
+.hw-spider svg{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 6px rgba(0,0,0,.25))}
+.hw-spider .hw-legs-l{transform-origin:50px 62px;animation:hwTwitchL 3.2s ease-in-out infinite}
+.hw-spider .hw-legs-r{transform-origin:50px 62px;animation:hwTwitchR 3.2s ease-in-out infinite .4s}
+.hw-spider--cycle{animation:hwDropCycle 15s ease-in-out var(--delay,0s) infinite}
+.hw-spider--cycle .hw-spider-inner{animation:none}
+@keyframes hwDrop{to{transform:translateY(var(--drop,120px))}}
+@keyframes hwDropCycle{0%,8%{transform:translateY(-140%)}22%{transform:translateY(var(--drop,200px))}26%{transform:translateY(calc(var(--drop,200px) - 14px))}30%,58%{transform:translateY(var(--drop,200px))}74%,100%{transform:translateY(-140%)}}
+@keyframes hwBob{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(12px) rotate(3deg)}60%{transform:translateY(-6px) rotate(-3deg)}}
+@keyframes hwTwitchL{0%,70%,100%{transform:rotate(0)}76%{transform:rotate(-6deg)}82%{transform:rotate(3deg)}}
+@keyframes hwTwitchR{0%,70%,100%{transform:rotate(0)}76%{transform:rotate(6deg)}82%{transform:rotate(-3deg)}}
+
+/* Chauves-souris qui traversent l'écran */
+.hw-bat{position:absolute;left:-80px;top:var(--top,20%);width:var(--size,54px);animation:hwFly var(--dur,24s) linear var(--delay,0s) infinite}
+.hw-bat svg{display:block;width:100%;height:auto;animation:hwFlap .22s ease-in-out infinite alternate;transform-origin:50% 40%}
+@keyframes hwFly{0%{transform:translate(0,0)}8%{transform:translate(25vw,-30px)}16%{transform:translate(55vw,10px)}26%{transform:translate(calc(100vw + 160px),-40px)}100%{transform:translate(calc(100vw + 160px),-40px)}}
+@keyframes hwFlap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
+
+/* Zombie qui passe la tête sur le bord droit */
+.hw-zombie{position:absolute;right:0;top:46%;width:130px;transform:translateX(110%);transform-origin:100% 100%;animation:hwPeek 18s ease-in-out 6s infinite}
+.hw-zombie svg{display:block;width:100%;height:auto;filter:drop-shadow(-6px 8px 10px rgba(0,0,0,.25))}
+.hw-zombie .hw-z-eye{animation:hwBlink 18s steps(1) 6s infinite}
+@keyframes hwPeek{0%,60%{transform:translateX(110%) rotate(0)}66%{transform:translateX(38%) rotate(-9deg)}70%{transform:translateX(42%) rotate(-5deg)}76%{transform:translateX(36%) rotate(-11deg)}82%{transform:translateX(40%) rotate(-7deg)}88%,100%{transform:translateX(110%) rotate(0)}}
+@keyframes hwBlink{0%,73%,74.5%,100%{opacity:1}73.5%{opacity:0}}
+
+/* Citrouille lumineuse fixe (bureau) */
+.hw-pumpkin-fixed{position:absolute;left:18px;bottom:-14px;width:96px;animation:hwWobble 6s ease-in-out infinite;transform-origin:50% 100%}
+.hw-pumpkin-fixed svg,.hw-grave-pumpkin svg{display:block;width:100%;height:auto}
+.hw-pk-face{animation:hwFlicker 3.4s infinite}
+@keyframes hwWobble{0%,100%{transform:rotate(0)}50%{transform:rotate(-3deg)}}
+@keyframes hwFlicker{0%,100%{opacity:1}12%{opacity:.82}18%{opacity:.98}42%{opacity:.72}46%{opacity:.95}70%{opacity:.86}}
+
+/* --- Cimetière au-dessus du footer ------------------------------------------ */
+html.halloween footer{margin-top:0}
+.hw-graveyard{position:relative;height:130px;margin-top:3rem;overflow:hidden;pointer-events:none}
+.hw-ground{position:absolute;left:0;right:0;bottom:0;width:100%;height:46px;display:block}
+.hw-tomb{position:absolute;bottom:22px;width:var(--w,58px)}
+.hw-tomb svg{display:block;width:100%;height:auto}
+.hw-grave-pumpkin{position:absolute;bottom:14px;width:var(--w,62px)}
+.hw-grave-pumpkin .hw-pk-face{animation-delay:var(--fd,0s)}
+.hw-hand{position:absolute;bottom:0;width:var(--w,44px);height:110px;overflow:hidden}
+.hw-hand svg{position:absolute;left:0;bottom:0;width:100%;height:auto;transform:translateY(100%);animation:hwRise 10s ease-in-out var(--delay,0s) infinite}
+.hw-hand .hw-fingers{transform-origin:30px 40px;animation:hwGrab 10s ease-in-out var(--delay,0s) infinite}
+@keyframes hwRise{0%,10%{transform:translateY(100%)}24%{transform:translateY(18%)}28%{transform:translateY(24%)}32%,58%{transform:translateY(16%)}74%,100%{transform:translateY(100%)}}
+@keyframes hwGrab{0%,30%,62%,100%{transform:rotate(0)}38%{transform:rotate(-8deg)}44%{transform:rotate(6deg)}50%{transform:rotate(-6deg)}}
+
+/* --- Responsive ------------------------------------------------------------- */
+@media (max-width:1099px){.hw-spider--wide{display:none}}
+@media (max-width:767px){
+  .hw-web{width:90px;height:90px;opacity:.45}
+  .hw-spider{--size:32px}
+  .hw-zombie{width:86px}
+  .hw-pumpkin-fixed{display:none}
+  .hw-bat{--size:40px}
+  .hw-hide-mobile{display:none}
+  .hw-banner{font-size:0.8rem}
+}
+
+/* Mouvements réduits : décor statique, sans éléments qui traversent l'écran */
+@media (prefers-reduced-motion:reduce){
+  .hw-layer *,.hw-graveyard *{animation:none!important}
+  .hw-spider,.hw-spider--cycle{transform:translateY(var(--drop,120px))}
+  .hw-spider--cycle,.hw-bat,.hw-zombie{display:none}
+  .hw-hand svg{transform:translateY(30%)}
+}

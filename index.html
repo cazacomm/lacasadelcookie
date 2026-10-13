@@ -58,7 +58,8 @@
   "areaServed":[
     {"@type":"City","name":"Soumoulou"},
     {"@type":"City","name":"Pau"},
-    {"@type":"City","name":"Tarbes"}
+    {"@type":"City","name":"Tarbes"},
+    {"@type":"City","name":"Bagnères-de-Bigorre"}
   ],
   "sameAs":[
     "https://www.instagram.com/la_casa_del_cookie/",
@@ -157,11 +158,22 @@
     .seasonal-price{display:inline-flex;align-items:baseline;gap:0.55rem;margin-bottom:1.3rem;padding:0.55rem 1.1rem;background:#fff;border:1px solid rgba(200,138,91,0.2);border-radius:14px}
     .seasonal-price strong{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--color-primary-dark)}
     .seasonal-price span{font-size:0.9rem;color:var(--color-muted)}
-    .seasonal-card--pizza .seasonal-media{background:#f7e7d8}
     .btn-seasonal{display:inline-flex;align-items:center;justify-content:center;padding:0.95rem 1.6rem;border-radius:999px;background:#F1CB46;color:#2b1c10;font-size:0.96rem;font-weight:700;box-shadow:0 16px 40px rgba(241,203,70,0.35);animation:seasonalBlink 1s ease-in-out infinite, seasonalMove 1.8s ease-in-out infinite;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}
     .btn-seasonal:hover{filter:brightness(0.96);box-shadow:0 18px 46px rgba(241,203,70,0.45)}
     @keyframes seasonalBlink{0%,100%{opacity:1}50%{opacity:.72}}
     @keyframes seasonalMove{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.04)}}
+
+    .promo-card{display:grid;align-items:stretch;background:#1c130e;color:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft)}
+    .promo-media{min-height:260px}
+    .promo-media img{width:100%;height:100%;object-fit:cover}
+    .promo-content{padding:2rem 1.6rem;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:0.9rem}
+    .promo-kicker{font-size:0.78rem;letter-spacing:0.16em;text-transform:uppercase;color:#F28C28;font-weight:600}
+    .promo-title{font-family:'Playfair Display',serif;font-size:2.2rem;line-height:1.15}
+    .promo-desc{font-size:0.98rem;color:rgba(255,255,255,0.75);max-width:440px}
+    .promo-actions{display:flex;align-items:center;gap:1.2rem;margin-top:0.4rem}
+    .promo-price{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:600}
+    .promo-btn{padding:0.85rem 1.7rem;border-radius:var(--radius-pill);background:#F28C28;color:#1c130e;font-weight:600;font-size:0.95rem;transition:transform .15s ease,filter .15s ease}
+    .promo-btn:hover{transform:translateY(-1px);filter:brightness(1.06)}
 
     .best-grid{display:grid;gap:1.8rem}
     .cookie-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);display:flex;flex-direction:column}
@@ -206,8 +218,12 @@
       .hero-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
       .hero-title{font-size:2.8rem}
       .seasonal-card{grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr);padding:1.8rem}
+      .promo-card{grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr)}
+      .promo-media{min-height:380px}
+      .promo-content{padding:2.6rem 2.8rem}
+      .promo-title{font-size:2.6rem}
       .best-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-      .why-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .why-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .contact-band{grid-template-columns:1.3fr 1fr;padding:2rem 2.2rem}
       .contact-band-title{font-size:1.45rem}
     }
@@ -230,6 +246,8 @@
       .seasonal-media{min-height:220px}
     }
   </style>
+  <!-- Thème Halloween (se désactive tout seul après le 1er novembre) -->
+  <link rel="stylesheet" href="halloween.css">
 </head>
 <body>
 <header>
@@ -293,16 +311,18 @@
 
 <section class="section seasonal-wrap" aria-labelledby="edition-speciale">
     <div class="container">
-      <div class="seasonal-card seasonal-card--pizza">
-        <div class="seasonal-media">
-          <img src="images/pizzacookie.jpeg" alt="La Pizza Cookie de La Casa Del Cookie">
+      <div class="promo-card">
+        <div class="promo-media">
+          <img src="images/halloween-1.jpeg" alt="Le Cookie Araignée, édition Halloween de La Casa Del Cookie">
         </div>
-        <div class="seasonal-content">
-          <div class="seasonal-badge">🍕 Édition spéciale du moment</div>
-          <h2 class="seasonal-title" id="edition-speciale">La pizza de La Casa 🍕</h2>
-          <p class="seasonal-desc">Un cookie en format XXL, découpé en 8 parts de gourmandise. Moelleux au cœur, généreux en toppings, à partager… ou pas !</p>
-          <div class="seasonal-price"><strong>24,90 €</strong> <span>la pizza cookie · 8 parts</span></div>
-          <a class="btn-seasonal" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20la%20Pizza%20Cookie%20La%20Casa%20Del%20Cookie.%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander la pizza cookie</a>
+        <div class="promo-content">
+          <p class="promo-kicker">Édition limitée · Halloween</p>
+          <h2 class="promo-title" id="edition-speciale">Le Cookie Araignée</h2>
+          <p class="promo-desc">Noisettes torréfiées, pépites de chocolat et une araignée en chocolat posée dessus… Mamie a déjà grimpé sur la chaise.</p>
+          <div class="promo-actions">
+            <span class="promo-price">4,00 €</span>
+            <a class="promo-btn" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20le%20Cookie%20Araign%C3%A9e%20d%27Halloween.%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander</a>
+          </div>
         </div>
       </div>
     </div>
@@ -396,6 +416,13 @@
             <p class="why-text">Vous avez aussi la possibilité d'acheter vos cookies dans nos commerces partenaires, listés et mis à jour sur nos réseaux sociaux.</p>
           </div>
         </article>
+        <article class="why-card">
+          <div class="why-icon">🧺</div>
+          <div>
+            <h3 class="why-title">Sur les marchés</h3>
+            <p class="why-text">Retrouvez-moi le jeudi matin sous les halles Marcadieu à Tarbes et le samedi matin au marché de Bagnères-de-Bigorre.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -421,6 +448,7 @@
           <h2 class="contact-band-title" id="contact-title">Contact &amp; commandes</h2>
           <p class="contact-band-text">Les cookies sont préparés sur commande, avec un délai minimum de 48h à l’avance, afin de garantir fraîcheur et gourmandise.
 Le retrait est possible au laboratoire à Soumoulou, ou une livraison peut être proposée selon votre zone.
+Retrouvez-moi aussi le jeudi matin sous les halles Marcadieu à Tarbes et le samedi matin au marché de Bagnères-de-Bigorre.
 Certains cookies sont également disponibles chez nos commerces partenaires : la liste est communiquée sur les réseaux sociaux.</p>
         </div>
         <div class="contact-band-actions">
@@ -535,5 +563,6 @@ Certains cookies sont également disponibles chez nos commerces partenaires : la
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <!-- Roue de la fortune (pop-up marketing) -->
 <script src="roue.js" defer></script>
+<script src="halloween.js" defer></script>
 </body>
 </html>

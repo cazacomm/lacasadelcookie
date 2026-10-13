@@ -141,6 +141,8 @@
       .footer-top,.footer-bottom{flex-direction:column;align-items:center;text-align:center}
     }
   </style>
+  <!-- Thème Halloween (se désactive tout seul après le 1er novembre) -->
+  <link rel="stylesheet" href="halloween.css">
 </head>
 <body>
 <header>
@@ -220,7 +222,7 @@
         <div class="contact-band">
           <div>
             <h2 class="contact-band-title">Où nous trouver &amp; nous contacter ?</h2>
-            <p class="contact-band-text">La Casa Del Cookie est basée à Soumoulou, avec une production artisanale à la commande. Vous pouvez aussi retrouver les cookies dans des commerces partenaires autour de Tarbes et ses alentours.</p>
+            <p class="contact-band-text">La Casa Del Cookie est basée à Soumoulou, avec une production artisanale à la commande. Vous pouvez aussi retrouver les cookies dans des commerces partenaires autour de Tarbes et ses alentours, ainsi que sur les marchés : le jeudi matin sous les halles Marcadieu à Tarbes et le samedi matin au marché de Bagnères-de-Bigorre.</p>
             <p class="contact-meta" style="margin-top:0.8rem;">Les informations pratiques (adresses précises, points de vente, horaires) sont communiquées sur nos réseaux sociaux.</p>
           </div>
           <div class="contact-band-actions">
@@ -297,5 +299,6 @@
     if(yearSpan){yearSpan.textContent=new Date().getFullYear();}
   })();
 </script>
+<script src="halloween.js" defer></script>
 </body>
 </html>
