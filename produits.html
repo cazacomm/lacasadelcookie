@@ -107,6 +107,26 @@
     @media (min-width:768px){.product-card--wide{flex-direction:row}.product-card--wide .product-image{flex:0 0 42%;min-height:380px}.product-card--wide .product-body{flex:1;justify-content:center;padding:2rem 2.2rem}}
     @media (max-width:767px){.range-header{flex-direction:column;gap:0.2rem}.range-title{font-size:1.4rem}}
 
+    /* Mobile : 2 cookies par ligne (la fiche protéinée garde toute la largeur) */
+    @media (max-width:767px){
+      .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:0.9rem}
+      .product-card{border-radius:var(--radius-md)}
+      .product-image{padding-top:80%}
+      .product-tag{left:0.5rem;top:0.5rem;padding:0.25rem 0.55rem;font-size:0.6rem;letter-spacing:0.06em;max-width:calc(100% - 1rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .product-logo{right:0.5rem;bottom:0.5rem}.product-logo img{height:20px}
+      .product-body{padding:0.75rem 0.8rem 0.9rem;gap:0.35rem}
+      .product-title{font-size:0.88rem;line-height:1.3}
+      .product-desc{font-size:0.76rem;line-height:1.45}
+      .product-meta{font-size:0.78rem;flex-direction:column;align-items:flex-start;gap:0.25rem;margin-top:auto}
+      .product-body{flex:1}
+      .tag-extra{display:none}
+      .product-card--wide .product-image{min-height:240px}
+      .product-card--wide .product-body{padding:1.1rem 1.2rem 1.3rem}
+      .product-card--wide .product-title{font-size:1rem}
+      .product-card--wide .product-desc{font-size:0.88rem}
+      .product-card--wide .product-meta{font-size:0.88rem}
+    }
+
     .contact-band{background:linear-gradient(120deg,#000,#3b2416);color:#fff;border-radius:var(--radius-lg);padding:1.8rem 1.5rem;display:grid;gap:1.2rem;align-items:center;box-shadow:var(--shadow-soft);margin-top:3rem}
     .contact-band-title{font-family:'Playfair Display',serif;font-size:1.3rem;margin-bottom:0.3rem}
     .contact-band-text{font-size:0.9rem;opacity:0.9}
@@ -193,7 +213,7 @@
       <div class="products-grid">
         <article class="product-card">
           <div class="product-image" style="background-image:url('images/halloween-2.jpeg');">
-            <span class="product-tag">🎃 Halloween · Édition limitée</span>
+            <span class="product-tag">🎃 Halloween<span class="tag-extra"> · Édition limitée</span></span>
             <span class="product-logo" aria-hidden="true"> <img src="images/logo-secondaire.png" alt=""> </span>
           </div>
           <div class="product-body">
