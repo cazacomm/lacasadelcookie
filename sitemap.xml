@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/</loc>
-    <lastmod>2026-10-12</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -95,6 +95,13 @@
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/coulisses-journee-atelier-soumoulou/</loc>
     <lastmod>2026-10-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.lacasadelcookie.fr/blog/idees-cadeaux-gourmands-offrir-bearn/</loc>
+    <lastmod>2026-10-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
