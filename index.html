@@ -158,11 +158,74 @@
     .seasonal-price{display:inline-flex;align-items:baseline;gap:0.55rem;margin-bottom:1.3rem;padding:0.55rem 1.1rem;background:#fff;border:1px solid rgba(200,138,91,0.2);border-radius:14px}
     .seasonal-price strong{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--color-primary-dark)}
     .seasonal-price span{font-size:0.9rem;color:var(--color-muted)}
-    .seasonal-card--pizza .seasonal-media{background:#f7e7d8}
     .btn-seasonal{display:inline-flex;align-items:center;justify-content:center;padding:0.95rem 1.6rem;border-radius:999px;background:#F1CB46;color:#2b1c10;font-size:0.96rem;font-weight:700;box-shadow:0 16px 40px rgba(241,203,70,0.35);animation:seasonalBlink 1s ease-in-out infinite, seasonalMove 1.8s ease-in-out infinite;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}
     .btn-seasonal:hover{filter:brightness(0.96);box-shadow:0 18px 46px rgba(241,203,70,0.45)}
     @keyframes seasonalBlink{0%,100%{opacity:1}50%{opacity:.72}}
     @keyframes seasonalMove{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.04)}}
+
+    /* ===== Mise en avant : gamme protéinée ===== */
+    .pro{position:relative;display:grid;grid-template-columns:minmax(0,1fr);border-radius:28px;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,#3b2416 0%,#1d130d 55%,#140d09 100%);color:#fff;box-shadow:0 30px 70px rgba(29,19,13,0.28);isolation:isolate}
+    .pro::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(200,138,91,0.22) 80%,transparent 90%);animation:proSpin 14s linear infinite;z-index:-1}
+    .pro::after{content:"";position:absolute;inset:1px;border-radius:27px;background:radial-gradient(120% 90% at 100% 0%,#3b2416 0%,#1d130d 55%,#140d09 100%);z-index:-1}
+    @keyframes proSpin{to{transform:rotate(360deg)}}
+    .pro-media{position:relative;min-height:340px;overflow:hidden}
+    .pro-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 68%;transform:scale(1.08);animation:proZoom 16s ease-in-out infinite alternate}
+    .pro-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,13,9,0) 55%,rgba(20,13,9,0.55) 100%)}
+    @keyframes proZoom{to{transform:scale(1.18) translateY(-2%)}}
+    .pro-badge{position:absolute;right:1.1rem;bottom:1.1rem;z-index:2;width:118px;height:118px;border-radius:50%;display:grid;place-items:center;text-align:center;background:rgba(20,13,9,0.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 14px 34px rgba(0,0,0,0.35);animation:proFloat 3.2s ease-in-out infinite}
+    .pro-badge svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+    .pro-badge circle{fill:none;stroke-width:6}
+    .pro-badge .track{stroke:rgba(255,255,255,0.12)}
+    .pro-badge .bar{stroke:var(--color-primary);stroke-linecap:round;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}
+    .pro-badge b{display:block;font-family:'Playfair Display',serif;font-size:2.1rem;line-height:1}
+    .pro-badge small{display:block;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;opacity:0.75;margin-top:0.2rem}
+    @keyframes proFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .pro-content{padding:2.2rem 1.6rem 1.8rem;display:flex;flex-direction:column;align-items:flex-start;gap:1rem}
+    .pro-kicker{display:inline-flex;align-items:center;gap:0.55rem;font-size:0.74rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--color-primary);font-weight:600}
+    .pro-kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--color-primary);box-shadow:0 0 0 0 rgba(200,138,91,0.6);animation:proPing 1.8s ease-out infinite}
+    @keyframes proPing{to{box-shadow:0 0 0 12px rgba(200,138,91,0)}}
+    .pro-title{font-family:'Playfair Display',serif;font-size:2.3rem;line-height:1.1;font-weight:600}
+    .pro-title em{font-style:italic;color:var(--color-primary)}
+    .pro-desc{font-size:0.97rem;color:rgba(255,255,255,0.72);max-width:440px}
+    .pro-switch{display:inline-flex;padding:4px;border-radius:999px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);position:relative}
+    .pro-switch button{position:relative;z-index:1;padding:0.55rem 1.15rem;border-radius:999px;color:rgba(255,255,255,0.7);font-size:0.88rem;font-weight:500;transition:color .25s ease}
+    .pro-switch button[aria-pressed="true"]{color:#1d130d}
+    .pro-pill{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--color-secondary);transition:transform .35s cubic-bezier(.2,.8,.2,1),width .35s cubic-bezier(.2,.8,.2,1)}
+    .pro-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.6rem;width:100%;max-width:460px}
+    .pro-stat{padding:0.85rem 0.6rem;border-radius:16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);text-align:center}
+    .pro-stat b{display:block;font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--color-secondary)}
+    .pro-stat > span{font-size:0.72rem;color:rgba(255,255,255,0.6);letter-spacing:0.04em}
+    .pro-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:0.3rem}
+    .pro-price{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:600}
+    .pro-price small{font-family:'Poppins',sans-serif;font-size:0.8rem;opacity:0.6;font-weight:400;margin-left:0.3rem}
+    .pro-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 1.7rem;border-radius:999px;background:var(--color-primary);color:#fff;font-weight:600;font-size:0.95rem;box-shadow:0 14px 34px rgba(200,138,91,0.35);transition:transform .2s ease,background .2s ease}
+    .pro-btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.45),transparent);transform:skewX(-20deg);animation:proShine 3s ease-in-out infinite}
+    @keyframes proShine{0%,60%{left:-60%}100%{left:130%}}
+    .pro-btn:hover{transform:translateY(-2px);background:var(--color-primary-dark)}
+    .pro-btn span{transition:transform .2s ease}.pro-btn:hover span{transform:translateX(4px)}
+    .pro-link{font-size:0.88rem;color:rgba(255,255,255,0.75);border-bottom:1px solid rgba(255,255,255,0.25);padding-bottom:2px}
+    .pro-link:hover{color:#fff;border-color:#fff}
+    .pro-ticker{grid-column:1/-1;overflow:hidden;border-top:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.18);padding:0.8rem 0}
+    .pro-ticker-track{display:flex;width:max-content;animation:proTicker 28s linear infinite}
+    .pro-ticker span{white-space:nowrap;padding:0 1.4rem;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+    .pro-ticker span::after{content:"✦";margin-left:2.8rem;color:var(--color-primary)}
+    @keyframes proTicker{to{transform:translateX(-50%)}}
+    .pro [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+    .pro.is-in [data-reveal]{opacity:1;transform:none}
+    .pro.is-in [data-reveal="2"]{transition-delay:.1s}.pro.is-in [data-reveal="3"]{transition-delay:.2s}.pro.is-in [data-reveal="4"]{transition-delay:.3s}.pro.is-in [data-reveal="5"]{transition-delay:.4s}
+    .pro-count{transition:opacity .2s ease}
+    @media (min-width:768px){
+      .pro{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}
+      .pro-media{min-height:480px}
+      .pro-content{padding:3rem 3rem 2.6rem;justify-content:center}
+      .pro-title{font-size:2.9rem}
+      .pro-badge{width:140px;height:140px;right:1.6rem;bottom:1.6rem}
+      .pro-badge b{font-size:2.5rem}
+    }
+    @media (prefers-reduced-motion:reduce){
+      .pro::before,.pro-media img,.pro-badge,.pro-kicker::before,.pro-btn::after,.pro-ticker-track{animation:none}
+      .pro [data-reveal]{opacity:1;transform:none;transition:none}
+    }
 
 
     .best-grid{display:grid;gap:1.8rem}
@@ -295,20 +358,71 @@
 
 <section class="section seasonal-wrap" aria-labelledby="edition-speciale">
     <div class="container">
-      <div class="seasonal-card seasonal-card--pizza">
-        <div class="seasonal-media">
-          <img src="images/pizzacookie.jpeg" alt="La Pizza Cookie de La Casa Del Cookie">
+      <div class="pro" id="pro-card">
+        <div class="pro-media">
+          <img src="images/proteine-noisette.jpeg" alt="Cookie protéiné noisette de La Casa Del Cookie" loading="lazy">
+          <div class="pro-badge" aria-hidden="true">
+            <svg viewBox="0 0 110 110"><circle class="track" cx="55" cy="55" r="50"/><circle class="bar" cx="55" cy="55" r="50"/></svg>
+            <div><b class="pro-count">0</b><small>g protéines</small></div>
+          </div>
         </div>
-        <div class="seasonal-content">
-          <div class="seasonal-badge">🍕 Édition spéciale du moment</div>
-          <h2 class="seasonal-title" id="edition-speciale">La pizza de La Casa 🍕</h2>
-          <p class="seasonal-desc">Un cookie en format XXL, découpé en 8 parts de gourmandise. Moelleux au cœur, généreux en toppings, à partager… ou pas !</p>
-          <div class="seasonal-price"><strong>24,90 €</strong> <span>la pizza cookie · 8 parts</span></div>
-          <a class="btn-seasonal" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20la%20Pizza%20Cookie%20La%20Casa%20Del%20Cookie.%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander la pizza cookie</a>
+        <div class="pro-content">
+          <p class="pro-kicker" data-reveal="1">Nouvelle gamme · Protéinée</p>
+          <h2 class="pro-title" id="edition-speciale" data-reveal="2">La gourmandise<br>qui a du <em>muscle</em>.</h2>
+          <p class="pro-desc" data-reveal="3">Un max de gourmandise, des protéines en plus, sans beurre et moins de sucres. Le cookie d’après séance… ou d’avant, on ne juge pas.</p>
+          <div class="pro-switch" role="group" aria-label="Choisir le parfum" data-reveal="3">
+            <span class="pro-pill" aria-hidden="true"></span>
+            <button type="button" aria-pressed="true" data-g="16" data-name="Cacahuète">Cacahuète</button>
+            <button type="button" aria-pressed="false" data-g="14" data-name="Noisette">Noisette</button>
+          </div>
+          <div class="pro-stats" data-reveal="4">
+            <div class="pro-stat"><b><span class="pro-count">16</span> g</b><span>protéines</span></div>
+            <div class="pro-stat"><b>0</b><span>beurre</span></div>
+            <div class="pro-stat"><b>−</b><span>de sucres</span></div>
+          </div>
+          <div class="pro-actions" data-reveal="5">
+            <span class="pro-price">4,00 €<small>l’unité</small></span>
+            <a class="pro-btn" id="pro-order" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20des%20cookies%20prot%C3%A9in%C3%A9s%20(Cacahu%C3%A8te).%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander <span>→</span></a>
+            <a class="pro-link" href="produits.html">Voir la gamme</a>
+          </div>
+        </div>
+        <div class="pro-ticker" aria-hidden="true">
+          <div class="pro-ticker-track">
+            <span>Sans beurre</span><span>16 g de protéines</span><span>Moins de sucres</span><span>Fait main à Soumoulou</span><span>Cacahuète &amp; Noisette</span>
+            <span>Sans beurre</span><span>16 g de protéines</span><span>Moins de sucres</span><span>Fait main à Soumoulou</span><span>Cacahuète &amp; Noisette</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
+<script>
+(function(){
+  var card=document.getElementById('pro-card'); if(!card) return;
+  var counts=card.querySelectorAll('.pro-count'), bar=card.querySelector('.pro-badge .bar');
+  var btns=card.querySelectorAll('.pro-switch button'), pill=card.querySelector('.pro-pill'), order=document.getElementById('pro-order');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches, current=0, raf;
+  function setRing(g){ if(bar) bar.style.strokeDashoffset=314-314*(g/20); }
+  function animateTo(g){
+    cancelAnimationFrame(raf); setRing(g);
+    if(reduce){ counts.forEach(function(c){c.textContent=g}); current=g; return; }
+    var from=current, t0=performance.now();
+    (function step(t){ var p=Math.min((t-t0)/900,1), e=1-Math.pow(1-p,3), v=Math.round(from+(g-from)*e);
+      counts.forEach(function(c){c.textContent=v}); if(p<1) raf=requestAnimationFrame(step); else current=g; })(t0);
+  }
+  function movePill(b){ pill.style.width=b.offsetWidth+'px'; pill.style.transform='translateX('+(b.offsetLeft-4)+'px)'; }
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)}); movePill(b); animateTo(+b.dataset.g);
+    if(order) order.href='https://wa.me/33782163179?text='+encodeURIComponent('Bonjour,\nJe souhaite commander des cookies protéinés ('+b.dataset.name+').\nMerci par avance');
+  }); });
+  function init(){ movePill(btns[0]); }
+  window.addEventListener('resize',function(){ var a=card.querySelector('.pro-switch [aria-pressed="true"]'); if(a) movePill(a); });
+  init();
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ card.classList.add('is-in'); animateTo(16); io.disconnect(); } }); },{threshold:0.3});
+    io.observe(card);
+  } else { card.classList.add('is-in'); animateTo(16); }
+})();
+</script>
 
   <section class="section" aria-labelledby="best-sellers">
     <div class="container">
