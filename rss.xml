@@ -5,13 +5,22 @@
     <link>https://www.lacasadelcookie.fr/blog/</link>
     <description>Conseils, coulisses et bons plans autour du cookie artisanal à Soumoulou, Pau et Tarbes.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Mon, 02 Nov 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 09:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.lacasadelcookie.fr/rss.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://www.lacasadelcookie.fr/images/logo-secondaire.png</url>
       <title>Blog – La Casa Del Cookie</title>
       <link>https://www.lacasadelcookie.fr/blog/</link>
     </image>
+
+    <item>
+      <title>Comment se passe la livraison de cookies à Pau ?</title>
+      <link>https://www.lacasadelcookie.fr/blog/comment-passe-livraison-cookies-pau/</link>
+      <guid isPermaLink="true">https://www.lacasadelcookie.fr/blog/comment-passe-livraison-cookies-pau/</guid>
+      <pubDate>Mon, 09 Nov 2026 09:00:00 +0200</pubDate>
+      <category>Cookies artisanaux</category>
+      <description>Découvrez le service de livraison de cookies artisanaux à Pau. Fraîcheur et gourmandise garanties.</description>
+    </item>
 
     <item>
       <title>Cookies pour une réception inoubliable</title>
