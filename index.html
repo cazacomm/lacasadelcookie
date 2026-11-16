@@ -187,10 +187,6 @@
     .pro-title{font-family:'Playfair Display',serif;font-size:2.3rem;line-height:1.1;font-weight:600}
     .pro-title em{font-style:italic;color:var(--color-primary)}
     .pro-desc{font-size:0.97rem;color:rgba(255,255,255,0.72);max-width:440px}
-    .pro-switch{display:inline-flex;padding:4px;border-radius:999px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);position:relative}
-    .pro-switch button{position:relative;z-index:1;padding:0.55rem 1.15rem;border-radius:999px;color:rgba(255,255,255,0.7);font-size:0.88rem;font-weight:500;transition:color .25s ease}
-    .pro-switch button[aria-pressed="true"]{color:#1d130d}
-    .pro-pill{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--color-secondary);transition:transform .35s cubic-bezier(.2,.8,.2,1),width .35s cubic-bezier(.2,.8,.2,1)}
     .pro-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.6rem;width:100%;max-width:460px}
     .pro-stat{padding:0.85rem 0.6rem;border-radius:16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);text-align:center}
     .pro-stat b{display:block;font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--color-secondary)}
@@ -367,29 +363,24 @@
           </div>
         </div>
         <div class="pro-content">
-          <p class="pro-kicker" data-reveal="1">Nouvelle gamme · Protéinée</p>
+          <p class="pro-kicker" data-reveal="1">Nouvelle gamme · Protéinée · Noisette</p>
           <h2 class="pro-title" id="edition-speciale" data-reveal="2">La gourmandise<br>qui a du <em>muscle</em>.</h2>
-          <p class="pro-desc" data-reveal="3">Un max de gourmandise, des protéines en plus, sans beurre et moins de sucres. Le cookie d’après séance… ou d’avant, on ne juge pas.</p>
-          <div class="pro-switch" role="group" aria-label="Choisir le parfum" data-reveal="3">
-            <span class="pro-pill" aria-hidden="true"></span>
-            <button type="button" aria-pressed="true" data-g="16" data-name="Cacahuète">Cacahuète</button>
-            <button type="button" aria-pressed="false" data-g="14" data-name="Noisette">Noisette</button>
-          </div>
+          <p class="pro-desc" data-reveal="3">Un cookie moelleux à la noisette, pas sec du tout : un max de gourmandise, des protéines en plus, sans beurre et moins de sucres. Le cookie d’après séance… ou d’avant, on ne juge pas.</p>
           <div class="pro-stats" data-reveal="4">
-            <div class="pro-stat"><b><span class="pro-count">16</span> g</b><span>protéines</span></div>
+            <div class="pro-stat"><b><span class="pro-count">14</span> g</b><span>protéines</span></div>
             <div class="pro-stat"><b>0</b><span>beurre</span></div>
             <div class="pro-stat"><b>−</b><span>de sucres</span></div>
           </div>
           <div class="pro-actions" data-reveal="5">
             <span class="pro-price">4,00 €<small>l’unité</small></span>
-            <a class="pro-btn" id="pro-order" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20des%20cookies%20prot%C3%A9in%C3%A9s%20(Cacahu%C3%A8te).%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander <span>→</span></a>
+            <a class="pro-btn" id="pro-order" href="https://wa.me/33782163179?text=Bonjour%2C%0AJe%20souhaite%20commander%20des%20cookies%20prot%C3%A9in%C3%A9s%20(Noisette).%0AMerci%20par%20avance" target="_blank" rel="noreferrer">Commander <span>→</span></a>
             <a class="pro-link" href="produits.html">Voir la gamme</a>
           </div>
         </div>
         <div class="pro-ticker" aria-hidden="true">
           <div class="pro-ticker-track">
-            <span>Sans beurre</span><span>16 g de protéines</span><span>Moins de sucres</span><span>Fait main à Soumoulou</span><span>Cacahuète &amp; Noisette</span>
-            <span>Sans beurre</span><span>16 g de protéines</span><span>Moins de sucres</span><span>Fait main à Soumoulou</span><span>Cacahuète &amp; Noisette</span>
+            <span>Sans beurre</span><span>14 g de protéines</span><span>Moins de sucres</span><span>Fait main à Soumoulou</span><span>Moelleux à la noisette</span>
+            <span>Sans beurre</span><span>14 g de protéines</span><span>Moins de sucres</span><span>Fait main à Soumoulou</span><span>Moelleux à la noisette</span>
           </div>
         </div>
       </div>
@@ -399,7 +390,6 @@
 (function(){
   var card=document.getElementById('pro-card'); if(!card) return;
   var counts=card.querySelectorAll('.pro-count'), bar=card.querySelector('.pro-badge .bar');
-  var btns=card.querySelectorAll('.pro-switch button'), pill=card.querySelector('.pro-pill'), order=document.getElementById('pro-order');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches, current=0, raf;
   function setRing(g){ if(bar) bar.style.strokeDashoffset=314-314*(g/20); }
   function animateTo(g){
@@ -409,18 +399,10 @@
     (function step(t){ var p=Math.min((t-t0)/900,1), e=1-Math.pow(1-p,3), v=Math.round(from+(g-from)*e);
       counts.forEach(function(c){c.textContent=v}); if(p<1) raf=requestAnimationFrame(step); else current=g; })(t0);
   }
-  function movePill(b){ pill.style.width=b.offsetWidth+'px'; pill.style.transform='translateX('+(b.offsetLeft-4)+'px)'; }
-  btns.forEach(function(b){ b.addEventListener('click',function(){
-    btns.forEach(function(x){x.setAttribute('aria-pressed',x===b)}); movePill(b); animateTo(+b.dataset.g);
-    if(order) order.href='https://wa.me/33782163179?text='+encodeURIComponent('Bonjour,\nJe souhaite commander des cookies protéinés ('+b.dataset.name+').\nMerci par avance');
-  }); });
-  function init(){ movePill(btns[0]); }
-  window.addEventListener('resize',function(){ var a=card.querySelector('.pro-switch [aria-pressed="true"]'); if(a) movePill(a); });
-  init();
   if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ card.classList.add('is-in'); animateTo(16); io.disconnect(); } }); },{threshold:0.3});
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ card.classList.add('is-in'); animateTo(14); io.disconnect(); } }); },{threshold:0.3});
     io.observe(card);
-  } else { card.classList.add('is-in'); animateTo(16); }
+  } else { card.classList.add('is-in'); animateTo(14); }
 })();
 </script>
 
