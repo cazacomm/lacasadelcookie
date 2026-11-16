@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/</loc>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -123,6 +123,13 @@
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/comment-passe-livraison-cookies-pau/</loc>
     <lastmod>2026-11-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.lacasadelcookie.fr/blog/meilleures-occasions-offrir-cookies-tarbes/</loc>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
