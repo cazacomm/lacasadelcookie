@@ -98,6 +98,11 @@
     .range-header + .products-grid{margin-bottom:3.2rem}
     .range-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;line-height:1.2}
     .range-sub{font-size:0.9rem;color:var(--color-muted)}
+    .product-card--noel{box-shadow:0 0 0 2px #a8322d,var(--shadow-soft)}
+    .product-card--noel .product-tag{background:#a8322d;color:#fff}
+    .product-card--noel .product-title{color:#a8322d}
+    .product-notes{font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:#2f6b4f;font-weight:600}
+    @media (max-width:767px){.product-notes{font-size:0.6rem;letter-spacing:0.03em}}
     .product-card--wide{grid-column:1/-1}
     .product-card--wide .product-image{padding-top:0;min-height:300px;background-position:center 60%}
     .protein-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--color-text)}
@@ -174,6 +179,8 @@
       .footer-top,.footer-bottom{flex-direction:column;align-items:center;text-align:center}
     }
   </style>
+  <!-- Thème Noël (se désactive tout seul le 1er janvier) -->
+  <link rel="stylesheet" href="noel.css">
 </head>
 <body>
 <header>
@@ -215,6 +222,21 @@
       </div>
 
       <div class="products-grid">
+        <article class="product-card product-card--noel">
+          <div class="product-image" style="background-image:url('images/cookienoel3.jpeg');">
+            <span class="product-tag">🎄 Noël · Édition limitée</span>
+            <span class="product-logo" aria-hidden="true"> <img src="images/logo-secondaire.png" alt=""> </span>
+          </div>
+          <div class="product-body">
+            <h2 class="product-title">L’Orangette</h2>
+            <p class="product-notes">Orange · Chocolat noir · Noisettes</p>
+            <p class="product-desc">Un cookie généreux et moelleux, subtilement parfumé aux zestes d’orange, associé à des éclats de chocolat noir et des noisettes gourmandes.</p>
+            <div class="product-meta">
+              <span class="product-price">Collection Noël</span>
+              <a class="product-cc" href="https://calendly.com/lacasadelcookie/click-collect" target="_blank" rel="noreferrer">Click &amp; Collect →</a>
+            </div>
+          </div>
+        </article>
         <article class="product-card">
           <div class="product-image" style="background-image:url('images/produit-torrid.jpeg');">
             <span class="product-tag">Best-seller</span>
@@ -483,5 +505,6 @@
     if(yearSpan){yearSpan.textContent=new Date().getFullYear();}
   })();
 </script>
+<script src="noel.js" defer></script>
 </body>
 </html>
