@@ -24,7 +24,7 @@
 
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -130,6 +130,13 @@
   <url>
     <loc>https://www.lacasadelcookie.fr/blog/meilleures-occasions-offrir-cookies-tarbes/</loc>
     <lastmod>2026-11-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.lacasadelcookie.fr/blog/comment-choisir-entre-differents-parfums-cookies-soumoulou/</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

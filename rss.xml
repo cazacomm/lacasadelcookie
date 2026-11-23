@@ -5,13 +5,22 @@
     <link>https://www.lacasadelcookie.fr/blog/</link>
     <description>Conseils, coulisses et bons plans autour du cookie artisanal à Soumoulou, Pau et Tarbes.</description>
     <language>fr-FR</language>
-    <lastBuildDate>Mon, 16 Nov 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 09:00:00 +0200</lastBuildDate>
     <atom:link href="https://www.lacasadelcookie.fr/rss.xml" rel="self" type="application/rss+xml"/>
     <image>
       <url>https://www.lacasadelcookie.fr/images/logo-secondaire.png</url>
       <title>Blog – La Casa Del Cookie</title>
       <link>https://www.lacasadelcookie.fr/blog/</link>
     </image>
+
+    <item>
+      <title>Trouver le cookie parfait à Soumoulou</title>
+      <link>https://www.lacasadelcookie.fr/blog/comment-choisir-entre-differents-parfums-cookies-soumoulou/</link>
+      <guid isPermaLink="true">https://www.lacasadelcookie.fr/blog/comment-choisir-entre-differents-parfums-cookies-soumoulou/</guid>
+      <pubDate>Mon, 23 Nov 2026 09:00:00 +0200</pubDate>
+      <category>Cookies artisanaux</category>
+      <description>Découvrez comment choisir le parfum de cookie idéal à Soumoulou parmi nos créations artisanales.</description>
+    </item>
 
     <item>
       <title>Quand offrir des cookies à Tarbes ?</title>
